@@ -7,9 +7,11 @@ import { Provider } from 'react-redux';
 import 'antd/dist/antd.less';
 
 import reducer from './state/reducers/';
-import { Loading } from './components/common/Loading';
-import NavBar from './components/common/NavBar';
 import thunk from 'redux-thunk';
+
+import NavBar from './components/NavBar';
+import Filters from './components/Filters';
+import Visualization from './components/Visualization';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -26,9 +28,10 @@ ReactDOM.render(
 
 function App() {
   return (
-    <Router>
+    <>
       <NavBar />
-      <Route exact path="/" component={Loading} />
-    </Router>
+      <Filters />
+      <Visualization />
+    </>
   );
 }
