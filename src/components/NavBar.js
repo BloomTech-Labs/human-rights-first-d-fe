@@ -1,21 +1,38 @@
 import React from 'react';
-import '../styles/index.css';
+import { Button, Layout } from 'antd';
 
+const { Header } = Layout;
 const NavBar = () => {
   return (
-    <div className="logo-pane">
+    <Header
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '20px 10px',
+        overflow: 'hidden',
+      }}
+    >
       <div className="company-info">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Ubuntu_logo_copyleft_1.svg/1200px-Ubuntu_logo_copyleft_1.svg.png"
           alt="Human Rights First logo"
+          style={{
+            width: 50,
+            height: 50,
+          }}
         />
-        <h2 style={{ margin: 0 }}>Human Rights First</h2>
+        <h3 style={{ color: 'white' }}>Human Rights First</h3>
       </div>
       <div className="user-nav">
-        <button>Sign In</button>
-        <button>Sign Up</button>
+        <Button type="primary" shape="round" style={{ margin: 3 }}>
+          Sign in
+        </Button>
+        <Button type="primary" shape="round" style={{ margin: 3 }}>
+          Sign up
+        </Button>
       </div>
-    </div>
+    </Header>
   );
 };
 export default NavBar;

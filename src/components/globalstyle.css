@@ -1,0 +1,22 @@
+.main-heading {
+  text-align: left;
+  padding: 10px;
+  margin: 10px;
+}
+.search-result,
+.visual-style,
+.dates {
+  padding: 10px;
+  margin: 10px;
+}
+.map-style,
+.incidents {
+  padding: 5px;
+  margin: 10px;
+}
+
+.input-form {
+  display: flex;
+  padding: 10px;
+  margin: 10px;
+}
