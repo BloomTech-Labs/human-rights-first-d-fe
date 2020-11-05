@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 import NavBar from './components/NavBar';
 import Filters from './components/Filters';
 import Visualization from './components/Visualization';
+import Loading from './components/common/Loading';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -30,7 +31,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <Filters />
+      <Loading />
       <Visualization />
     </>
   );
