@@ -15,7 +15,7 @@ const Loading = () => {
   const openFilters = (
     <Popover
       placement="bottomRight"
-      title={<span>Filter Your Results</span>}
+      title={<span></span>}
       content={<Filters />}
       trigger="click"
     >
@@ -39,10 +39,10 @@ const Loading = () => {
           </TabPane>
           <TabPane tab="Graph" key="2" style={{ backgroundColor: '#191a1a' }}>
             <div id="graph">{<Graph />}</div>
-          </TabPane> */}
+          </TabPane>
           <TabPane tab="About" key="3">
             <div id="about">{<About />}</div>
-          </TabPane>
+          </TabPane> */}
         </Tabs>
       </main>
       <footer className="page-footer">

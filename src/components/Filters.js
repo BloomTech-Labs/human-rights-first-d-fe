@@ -1,7 +1,7 @@
 import React from 'react';
 import { Radio, Button, Card } from 'antd';
 import { DatePicker, Space, Input } from 'antd';
-// import './globalstyle.css';
+import './globalstyle.css';
 const options = [
   { label: 'Map', value: 'Map' },
   { label: 'Pie Chart ', value: 'Pie Chart' },
@@ -23,16 +23,13 @@ class FilterSearch extends React.Component {
     const { value } = this.state;
     return (
       <div className="main">
-        <Card
-          title="Police Shooting Between 2013 and 2020"
-          style={{ width: 600 }}
-        >
+        <Card title="" style={{ width: 500 }}>
           <div className="search-result">
             <h2>Filter Your Results</h2>
           </div>
-          <div className="visual-style">
+          {/* <div className="visual-style">
             <h3>Select Visual Style</h3>
-          </div>
+          </div> */}
           <div className="radio-buttons">
             <div className="map-style">
               <Radio.Group

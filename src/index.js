@@ -4,13 +4,14 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 
+import Filters from './components/Filters';
+
 import 'antd/dist/antd.less';
 
 import reducer from './state/reducers/';
 import thunk from 'redux-thunk';
 
 import NavBar from './components/NavBar';
-import Filters from './components/Filters';
 import Visualization from './components/Visualization';
 import Loading from './components/common/Loading';
 
