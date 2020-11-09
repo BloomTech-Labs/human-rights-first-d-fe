@@ -7,13 +7,13 @@ import { Provider } from 'react-redux';
 import Filters from './components/Filters';
 
 import 'antd/dist/antd.less';
-// import './index.css';
+import './styles/normalize.css';
 
 import reducer from './state/reducers/';
 import thunk from 'redux-thunk';
 import { Button, Layout } from 'antd';
 
-import NavBar from './components/NavBar';
+import Header from './components/header';
 
 import Visualization from './components/Visualization';
 import Loading from './components/common/Loading';
@@ -37,7 +37,7 @@ ReactDOM.render(
 function App() {
   return (
     <>
-      <NavBar />
+      <Header />
       <Loading />
       <Visualization />
     </>
