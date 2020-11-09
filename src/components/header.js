@@ -1,35 +1,23 @@
 //imports
 import React from 'react';
-import { Button, Layout } from 'antd';
-import logo from '../assets/hrf-logo.png';
-import styled from 'styled-components';
+import '../../styles/index.css';
 
-const Div = styled.div`
-  .logo {
-    width: 20%;
-  }
-  /* .header__company-info {
-    display: flex;
-    flex-direction: row;
-    & img {
-      max-height: 100%;
-      max-width: 100%;
-    } */
-  /* } */
-`;
-
-const { Header } = Layout;
-const NavBar = () => {
+const Header = () => {
   return (
-    <Div>
-      <Layout className="layout">
-        <Header>
-          <div className="logo">
-            <img src={logo} alt="Human Rights First logo" />
-          </div>
-        </Header>
-      </Layout>
-    </Div>
+    <div className="logo-pane">
+      <div className="company-info">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Ubuntu_logo_copyleft_1.svg/1200px-Ubuntu_logo_copyleft_1.svg.png"
+          alt="Human Rights First logo"
+        />
+        <h2 style={{ margin: 0 }}>Human Rights First</h2>
+      </div>
+      <div className="user-nav">
+        <button>Sign In</button>
+        <button>Sign Up</button>
+      </div>
+    </div>
   );
 };
-export default NavBar;
+
+export default Header;
