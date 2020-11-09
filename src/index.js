@@ -13,7 +13,7 @@ import reducer from './state/reducers/';
 import thunk from 'redux-thunk';
 import { Button, Layout } from 'antd';
 
-import Header from './components/header';
+import Header from './components/Header';
 
 import Visualization from './components/Visualization';
 import Loading from './components/common/Loading';
