@@ -6,7 +6,7 @@ import About from '../common/About';
 // import FiltersForm from './FilterForm';
 import Filters from '../Filters';
 import 'antd/dist/antd.css';
-import '../../styles/index.css';
+// import '../../styles/index.css';
 import { Tabs, Button, Popover } from 'antd';
 
 const Loading = () => {

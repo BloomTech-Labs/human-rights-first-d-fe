@@ -1,38 +1,51 @@
+//imports
 import React from 'react';
 import { Button, Layout } from 'antd';
+// import styled from 'styled-components';
+
+// const Layout = styled.div`
+//   h3 {
+//     /* color: #fff8fb; */
+//     color: black;
+//     margin-top: 4%;
+//     font-family: 'Playfair Display', serif;
+//   }
+
+//   header {
+//     flex: 0 0 auto;
+//     height: 64px;
+//     padding: 0 50px;
+//     color: rgba(0, 0, 0, 0.85);
+//     line-height: 64px;
+//     background: #001529;
+//   }
+
+//   /* .header__company-info {
+//     display: flex;
+//     flex-direction: row;
+//     & img {
+//       max-height: 100%;
+//       max-width: 100%;
+//     } */
+//   /* } */
+// `;
 
 const { Header } = Layout;
 const NavBar = () => {
   return (
-    <Header
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '20px 10px',
-        overflow: 'hidden',
-      }}
-    >
-      <div className="company-info">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Ubuntu_logo_copyleft_1.svg/1200px-Ubuntu_logo_copyleft_1.svg.png"
-          alt="Human Rights First logo"
-          style={{
-            width: 50,
-            height: 50,
-          }}
-        />
-        <h3 style={{ color: 'white' }}>Human Rights First</h3>
-      </div>
-      <div className="user-nav">
-        <Button type="primary" shape="round" style={{ margin: 3 }}>
-          Sign in
-        </Button>
-        <Button type="primary" shape="round" style={{ margin: 3 }}>
-          Sign up
-        </Button>
-      </div>
-    </Header>
+    <Layout className="layout">
+      <Header>
+        <section className="header__company-info">
+          <div className="logo">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Ubuntu_logo_copyleft_1.svg/1200px-Ubuntu_logo_copyleft_1.svg.png"
+              alt="Human Rights First logo"
+            />
+            <p>Human Rights First</p>
+          </div>
+        </section>
+      </Header>
+    </Layout>
   );
 };
 export default NavBar;

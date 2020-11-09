@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import Filters from './components/Filters';
 
 import 'antd/dist/antd.less';
-import './index.css';
+// import './index.css';
 
 import reducer from './state/reducers/';
 import thunk from 'redux-thunk';
