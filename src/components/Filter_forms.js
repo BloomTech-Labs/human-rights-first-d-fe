@@ -66,6 +66,20 @@ const states = [
   { label: 'WY', value: 'WY' },
 ];
 
+const defaultFilterState = {
+  mapValue: 'Map',
+  incidentValue: 'Most Incident',
+  stateValue: '',
+  city: '',
+  zipcode: '',
+  showDemographic: false,
+  demographic: ['other'],
+  start_date: '2013-01-01',
+  end_date: '2019-01-01',
+  start_year: '2020',
+  end_year: '2020',
+};
+
 class Filter_forms extends React.Component {
   state = {
     value: 1,
