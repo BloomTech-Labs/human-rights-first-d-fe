@@ -3,8 +3,6 @@ import { Radio, Button, Card } from 'antd';
 import { DatePicker, Space, Input } from 'antd';
 import './globalstyle.css';
 
-
-
 const options = [
   { label: 'Map', value: 'Map' },
   { label: 'Pie Chart ', value: 'Pie Chart' },
@@ -13,7 +11,7 @@ const options = [
 const incidents = ['Most Incident', 'Least Incident'];
 const { RangePicker } = DatePicker;
 
-class FilterSearch extends React.Component {
+class Filter_forms extends React.Component {
   state = {
     value: 1,
   };
@@ -29,7 +27,6 @@ class FilterSearch extends React.Component {
     const { value } = this.state;
     return (
       <div className="main">
-
         <Card title="" style={{ width: 500 }}>
           <div className="search-result">
             <h2>Filter Your Results</h2>
@@ -154,10 +151,9 @@ class FilterSearch extends React.Component {
             Reset Filters
           </Button>
         </div>
-
       </div>
     );
   }
 }
 
-export default FilterSearch;
+export default Filter_forms;

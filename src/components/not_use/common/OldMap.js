@@ -21,7 +21,7 @@ import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
-import '../../styles/index.css';
+// import '../../styles/index.css';
 
 const useStyles = makeStyles({
   root: {
