@@ -1,16 +1,20 @@
 import React from 'react';
-import { Radio, Button, Card } from 'antd';
+import { Radio, Button, Card, Menu } from 'antd';
 import { DatePicker, Space, Input } from 'antd';
 // import './globalstyle.css';
 
-const options = [
-  { label: 'Map', value: 'Map' },
-  { label: 'Bar', value: 'Bar' },
-  { label: 'Pie Chart ', value: 'Pie Chart' },
-  { label: 'Other Chart', value: 'Other Chart' },
-];
-const incidents = ['Most Incident', 'Least Incident'];
+import { Dropdown, message, Tooltip } from 'antd';
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
+
+const options = [{ label: 'Map', value: 'Map' }];
 const { RangePicker } = DatePicker;
+
+// Button onChange info
+
+function handleMenuClick(e) {
+  message.info('Click on menu item.');
+  console.log('click', e);
+}
 
 const states = [
   { label: 'AL', value: 'AL' },
@@ -80,6 +84,21 @@ const defaultFilterState = {
   end_year: '2020',
 };
 
+const menu = (
+  <Menu onClick={handleMenuClick}>
+    <Menu.Item key="1">Armed</Menu.Item>
+    <Menu.Item key="2">UnArmed</Menu.Item>
+  </Menu>
+);
+
+const gender = (
+  <Menu onClick={handleMenuClick}>
+    <Menu.Item key="1">Male</Menu.Item>
+    <Menu.Item key="2">Female</Menu.Item>
+    <Menu.Item key="3">Undetermined</Menu.Item>
+  </Menu>
+);
+
 class Map extends React.Component {
   state = {
     ...defaultFilterState,
@@ -97,34 +116,6 @@ class Map extends React.Component {
     return (
       <div className="main">
         <Card title="" style={{ width: 500 }}>
-          <div className="search-result">
-            <h2>Filter Your Results</h2>
-          </div>
-          {/* <div className="visual-style">
-            <h3>Select Visual Style</h3>
-          </div> */}
-          <div className="radio-buttons">
-            <div className="map-style">
-              <Radio.Group
-                size="large"
-                options={options}
-                onChange={this.onChange}
-                value={value}
-                optionType="button"
-                buttonStyle="solid"
-              />
-            </div>
-            <div className="incidents">
-              <Radio.Group
-                size="large"
-                options={incidents}
-                onChange={this.onChange}
-                value={value}
-                optionType="button"
-                buttonStyle="solid"
-              />
-            </div>
-          </div>
           <div className="dates">
             <div>
               <Space direction="horizontal" size={12}>
@@ -134,9 +125,19 @@ class Map extends React.Component {
             </div>
           </div>
           <div className="input-form">
+            <Dropdown overlay={menu}>
+              <Button>
+                Armed ?
+                <DownOutlined />
+              </Button>
+            </Dropdown>
+            <Dropdown overlay={gender}>
+              <Button>
+                Gender
+                <DownOutlined />
+              </Button>
+            </Dropdown>
             <Input size="large" placeholder=" Select State" />
-            <Input placeholder="City" />
-            <Input placeholder="Zipcode" />
           </div>
           <Button type="primary" shape="round" size="large">
             Add More
@@ -155,71 +156,6 @@ class Map extends React.Component {
             </Button>
           </div>
         </Card>
-
-        <div className="main-heading">
-          <h1>Police Shooting Between 2013 and 2020</h1>
-        </div>
-        <div className="search-result">
-          <h2>Filter Your Results</h2>
-        </div>
-        <div className="visual-style">
-          <h3>Select Visual Style</h3>
-        </div>
-        <div className="radio-buttons">
-          <div className="map-style">
-            <Radio.Group
-              size="large"
-              options={options}
-              onChange={this.onChange}
-              value={value}
-              optionType="button"
-              buttonStyle="solid"
-            />
-          </div>
-
-          <div className="incidents">
-            <Radio.Group
-              size="large"
-              options={incidents}
-              onChange={this.onChange}
-              value={value}
-              optionType="button"
-              buttonStyle="solid"
-            />
-          </div>
-        </div>
-        <div className="dates">
-          <div>
-            <Space direction="horizontal" size={12}>
-              <RangePicker size="large" />
-
-              <RangePicker size="large" picker="year" />
-            </Space>
-          </div>
-        </div>
-
-        <div className="input-form">
-          <Input size="large" placeholder=" Select State" />
-          <Input placeholder="City" />
-          <Input placeholder="Zipcode" />
-        </div>
-        <Button type="primary" shape="round" size="large">
-          Add More
-        </Button>
-
-        <div style={{ textAlign: 'left', padding: '10px', margin: '10px' }}>
-          <Button
-            style={{ margin: '2px' }}
-            type="primary"
-            shape="round"
-            size="large"
-          >
-            Submit
-          </Button>
-          <Button type="primary" shape="round" size="large">
-            Reset Filters
-          </Button>
-        </div>
       </div>
     );
   }
