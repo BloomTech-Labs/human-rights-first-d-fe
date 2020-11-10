@@ -3,7 +3,16 @@ export const FETCH_SUCESS = 'FETCH_SUCESS';
 export const FETCH_FAILURE = 'FETCH_FAILURE';
 export const SAVE_SELECTED = 'SAVE_SELECTED';
 
-export const initialState = {};
+export const initialState = {
+  start_date: '',
+  end_date: '',
+  start_year: '',
+  end_year: '',
+  stateValue: '',
+  sort_by: '',
+  showDemographic: false,
+  armed: '',
+};
 
 export function mapReducer(state = initialState, action) {
   switch (action.type) {

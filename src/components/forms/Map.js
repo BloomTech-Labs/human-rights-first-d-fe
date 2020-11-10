@@ -126,13 +126,13 @@ class Map extends React.Component {
           </div>
           <div className="input-form">
             <Dropdown overlay={menu}>
-              <Button>
+              <Button type="primary" shape="round" size="large">
                 Armed ?
                 <DownOutlined />
               </Button>
             </Dropdown>
             <Dropdown overlay={gender}>
-              <Button>
+              <Button type="primary" shape="round" size="large">
                 Gender
                 <DownOutlined />
               </Button>
