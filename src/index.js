@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import reducer from './state/reducers/';
 import thunk from 'redux-thunk';
 import { Button, Layout } from 'antd';
-import FilterSearch from './components/Filters';
+import Filter_forms from './components/Filter_forms';
 
 //components
 import Header from './components/Header';

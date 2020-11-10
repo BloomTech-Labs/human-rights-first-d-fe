@@ -7,7 +7,7 @@ import About from './not_use/common/About';
 import 'antd/dist/antd.css';
 // import '../../styles/index.css';
 import { Tabs, Button, Popover } from 'antd';
-import Filters from './Filters';
+import Filter_forms from './Filter_forms';
 const Loading = () => {
   const { TabPane } = Tabs;
 
@@ -15,7 +15,7 @@ const Loading = () => {
     <Popover
       placement="bottomRight"
       title={<span></span>}
-      content={<Filters />}
+      content={<Filter_forms />}
       trigger="click"
     >
       <Button type="link">Open Filters</Button>
