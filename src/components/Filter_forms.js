@@ -5,6 +5,7 @@ import './globalstyle.css';
 
 const options = [
   { label: 'Map', value: 'Map' },
+  { label: 'Bar', value: 'Bar' },
   { label: 'Pie Chart ', value: 'Pie Chart' },
   { label: 'Other Chart', value: 'Other Chart' },
 ];
