@@ -1,6 +1,7 @@
 import React from 'react';
 import { Radio, Button, Card } from 'antd';
 import { DatePicker, Space, Input } from 'antd';
+import moment from 'moment';
 // import './globalstyle.css';
 
 const options = [
@@ -143,8 +144,39 @@ class BarGraph extends React.Component {
           <div className="dates">
             <div>
               <Space direction="horizontal" size={12}>
-                <RangePicker size="large" />
-                <RangePicker size="large" picker="year" />
+                <RangePicker
+                  defaultValue={[
+                    moment(this.state.start_date),
+                    moment(this.state.end_date),
+                  ]}
+                  onChange={date => {
+                    if (date.length === 2) {
+                      const start_date = moment(date[0]).format('yyyy-M-D');
+                      const end_date = moment(date[1]).format('yyyy-M-D');
+                      this.setState({
+                        start_date,
+                        end_date,
+                      });
+                    }
+                  }}
+                />
+                <RangePicker
+                  defaultValue={[
+                    moment(this.state.start_date),
+                    moment(this.state.end_date),
+                  ]}
+                  picker="year"
+                  onChange={date => {
+                    if (date.length === 2) {
+                      const start_year = moment(date[0]).format('yyyy');
+                      const end_year = moment(date[1]).format('yyyy');
+                      this.setState({
+                        start_year,
+                        end_year,
+                      });
+                    }
+                  }}
+                />
               </Space>
             </div>
           </div>
