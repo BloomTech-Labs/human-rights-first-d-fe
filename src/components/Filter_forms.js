@@ -1,159 +1,46 @@
+// imports
 import React from 'react';
-import { Radio, Button, Card } from 'antd';
-import { DatePicker, Space, Input } from 'antd';
-import './globalstyle.css';
+import { Tabs, Radio, Space } from 'antd';
+import Map from './forms/Map';
+import BarGraph from './forms/BarGraph';
+import PieChart from './forms/PieChart';
 
-const options = [
-  { label: 'Map', value: 'Map' },
-  { label: 'Pie Chart ', value: 'Pie Chart' },
-  { label: 'Other Chart', value: 'Other Chart' },
-];
-const incidents = ['Most Incident', 'Least Incident'];
-const { RangePicker } = DatePicker;
+const { TabPane } = Tabs;
 
-class Filter_forms extends React.Component {
+class FilterForm extends React.Component {
   state = {
-    value: 1,
+    tabPosition: 'left',
   };
 
-  onChange = e => {
-    console.log('radio checked', e.target.value);
-    this.setState({
-      value: e.target.value,
-    });
+  changeTabPosition = e => {
+    this.setState({ tabPosition: e.target.value });
   };
 
   render() {
-    const { value } = this.state;
+    const { tabPosition } = this.state;
     return (
-      <div className="main">
-        <Card title="" style={{ width: 500 }}>
-          <div className="search-result">
-            <h2>Filter Your Results</h2>
-          </div>
-          {/* <div className="visual-style">
-            <h3>Select Visual Style</h3>
-          </div> */}
-          <div className="radio-buttons">
-            <div className="map-style">
-              <Radio.Group
-                size="large"
-                options={options}
-                onChange={this.onChange}
-                value={value}
-                optionType="button"
-                buttonStyle="solid"
-              />
-            </div>
-            <div className="incidents">
-              <Radio.Group
-                size="large"
-                options={incidents}
-                onChange={this.onChange}
-                value={value}
-                optionType="button"
-                buttonStyle="solid"
-              />
-            </div>
-          </div>
-          <div className="dates">
-            <div>
-              <Space direction="horizontal" size={12}>
-                <RangePicker size="large" />
-                <RangePicker size="large" picker="year" />
-              </Space>
-            </div>
-          </div>
-          <div className="input-form">
-            <Input size="large" placeholder=" Select State" />
-            <Input placeholder="City" />
-            <Input placeholder="Zipcode" />
-          </div>
-          <Button type="primary" shape="round" size="large">
-            Add More
-          </Button>
-          <div style={{ textAlign: 'left', padding: '10px', margin: '10px' }}>
-            <Button
-              style={{ margin: '2px' }}
-              type="primary"
-              shape="round"
-              size="large"
-            >
-              Submit
-            </Button>
-            <Button type="primary" shape="round" size="large">
-              Reset Filters
-            </Button>
-          </div>
-        </Card>
-
-        <div className="main-heading">
-          <h1>Police Shooting Between 2013 and 2020</h1>
-        </div>
-        <div className="search-result">
-          <h2>Filter Your Results</h2>
-        </div>
-        <div className="visual-style">
-          <h3>Select Visual Style</h3>
-        </div>
-        <div className="radio-buttons">
-          <div className="map-style">
-            <Radio.Group
-              size="large"
-              options={options}
-              onChange={this.onChange}
-              value={value}
-              optionType="button"
-              buttonStyle="solid"
-            />
-          </div>
-
-          <div className="incidents">
-            <Radio.Group
-              size="large"
-              options={incidents}
-              onChange={this.onChange}
-              value={value}
-              optionType="button"
-              buttonStyle="solid"
-            />
-          </div>
-        </div>
-        <div className="dates">
-          <div>
-            <Space direction="horizontal" size={12}>
-              <RangePicker size="large" />
-
-              <RangePicker size="large" picker="year" />
-            </Space>
-          </div>
-        </div>
-
-        <div className="input-form">
-          <Input size="large" placeholder=" Select State" />
-          <Input placeholder="City" />
-          <Input placeholder="Zipcode" />
-        </div>
-        <Button type="primary" shape="round" size="large">
-          Add More
-        </Button>
-
-        <div style={{ textAlign: 'left', padding: '10px', margin: '10px' }}>
-          <Button
-            style={{ margin: '2px' }}
-            type="primary"
-            shape="round"
-            size="large"
-          >
-            Submit
-          </Button>
-          <Button type="primary" shape="round" size="large">
-            Reset Filters
-          </Button>
-        </div>
-      </div>
+      <>
+        {/* <Space style={{ marginBottom: 24 }}>
+          <Radio.Group value={tabPosition} onChange={this.changeTabPosition}>
+            <Radio.Button value="top">Map</Radio.Button>
+            <Radio.Button value="top">Pie Chart</Radio.Button>
+            <Radio.Button value="top">Bar Chart</Radio.Button>
+          </Radio.Group>
+        </Space> */}
+        <Tabs tabPosition="top">
+          <TabPane tab="Map" key="1">
+            <Map />
+          </TabPane>
+          <TabPane tab="Bar Graph" key="2">
+            <BarGraph />
+          </TabPane>
+          <TabPane tab="Pie Chart" key="3">
+            <PieChart />
+          </TabPane>
+        </Tabs>
+      </>
     );
   }
 }
 
-export default Filter_forms;
+export default FilterForm;
