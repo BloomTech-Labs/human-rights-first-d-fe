@@ -12,10 +12,6 @@ const Header = () => {
         />
         <h2 style={{ margin: 0 }}>Human Rights First</h2>
       </div>
-      <div className="user-nav">
-        <button>Sign In</button>
-        <button>Sign Up</button>
-      </div>
     </div>
   );
 };
