@@ -82,14 +82,35 @@ const defaultFilterState = {
 
 class Filter_forms extends React.Component {
   state = {
-    value: 1,
+    ...defaultFilterState,
   };
 
-  onChange = e => {
-    console.log('radio checked', e.target.value);
+  // FORM ACTIONS
+  handleChange = value => {
     this.setState({
-      value: e.target.value,
+      stateValue: value,
     });
+    console.log(`selected ${value}`);
+  };
+  onRadioChange = e => {
+    console.log('radio checked', e.target.value);
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+  handleDemographic = () => {
+    this.setState(prev => ({
+      ...prev,
+      showDemographic: !prev.showDemographic,
+    }));
+  };
+
+  addDemographic = value => {
+    this.setState(prev => ({
+      ...prev,
+      demographic: value,
+    }));
   };
 
   render() {
