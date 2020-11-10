@@ -4,21 +4,19 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-import Filters from './components/Filters';
-
-import 'antd/dist/antd.less';
-import './styles/normalize.css';
-
 import reducer from './state/reducers/';
 import thunk from 'redux-thunk';
 import { Button, Layout } from 'antd';
-
-import Header from './components/Header';
-
-import Visualization from './components/Visualization';
-import Loading from './components/common/Loading';
-
 import FilterSearch from './components/Filters';
+
+//components
+import Header from './components/Header';
+import Loading from './components/Loading';
+import Visualization from './components/Visualization';
+
+//CSS styles
+import 'antd/dist/antd.less';
+import './styles/normalize.css';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 const { Footer, Content } = Layout;

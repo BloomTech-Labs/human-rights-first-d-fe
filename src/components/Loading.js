@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 // import OldMap from './OldMap';
 // import Map from '../common/Map';
 // import Graph from '../common/Graph';
-import About from '../common/About';
+import About from './not_use/common/About';
 // import FiltersForm from './FilterForm';
-import Filters from '../Filters';
 import 'antd/dist/antd.css';
 // import '../../styles/index.css';
 import { Tabs, Button, Popover } from 'antd';
-
+import Filters from './Filters';
 const Loading = () => {
   const { TabPane } = Tabs;
 
