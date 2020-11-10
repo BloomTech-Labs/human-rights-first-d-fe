@@ -1,6 +1,6 @@
 import React from 'react';
 import { Radio, Button, Card } from 'antd';
-import { DatePicker, Space, Input } from 'antd';
+import { DatePicker, Space, Input, Select, Checkbox } from 'antd';
 import moment from 'moment';
 // import './globalstyle.css';
 
@@ -68,8 +68,8 @@ const states = [
 ];
 
 const defaultFilterState = {
-  mapValue: 'Map',
-  incidentValue: 'Most Incident',
+  //   mapValue: 'Map',
+  //   incidentValue: 'Most Incident',
   stateValue: '',
   city: '',
   zipcode: '',
@@ -119,28 +119,6 @@ class BarGraph extends React.Component {
     return (
       <div className="main">
         <Card title="" style={{ width: 500 }}>
-          {/* <div className="radio-buttons"> */}
-          {/* <div className="map-style">
-              <Radio.Group
-                size="large"
-                options={options}
-                onChange={this.onChange}
-                value={value}
-                optionType="button"
-                buttonStyle="solid"
-              />
-            </div>
-            <div className="incidents">
-              <Radio.Group
-                size="large"
-                options={incidents}
-                onChange={this.onChange}
-                value={value}
-                optionType="button"
-                buttonStyle="solid"
-              />
-            </div> */}
-          {/* </div> */}
           <div className="dates">
             <div>
               <Space direction="horizontal" size={12}>
@@ -180,24 +158,90 @@ class BarGraph extends React.Component {
               </Space>
             </div>
           </div>
-          <div className="input-form">
-            <Input size="large" placeholder=" Select State" />
-            <Input placeholder="City" />
-            <Input placeholder="Zipcode" />
+          <div
+            style={{
+              display: 'flex',
+              aligItems: 'center',
+              justifyContent: 'space-between',
+              paddingTop: '20px',
+            }}
+          >
+            <Select
+              style={{ width: '15%', alignSelf: 'flex-start' }}
+              defaultValue={[`${this.state.stateValue}`]}
+              value={this.state.stateValue}
+              onChange={this.handleChange}
+              optionLabelProp="label"
+            >
+              {states.map(state => (
+                <Select.Option
+                  key={state.label}
+                  value={state.value}
+                  label={`${state.label}`}
+                >
+                  <div className="demo-option-label-item">{state.value}</div>
+                </Select.Option>
+              ))}
+            </Select>
+            <Input
+              style={{
+                width: '25%',
+                alignSelf: 'flex-start',
+                margin: '0 10px',
+              }}
+              value={this.state.city}
+              placeholder="City"
+              onChange={event => {
+                this.setState({
+                  city: event.target.value,
+                });
+              }}
+            />
+            <Input
+              style={{ width: '25%', alignSelf: 'flex-start' }}
+              placeholder="Zipcode"
+              value={this.state.zipcode}
+              onChange={event => {
+                this.setState({
+                  zipcode: event.target.value,
+                });
+              }}
+            />
           </div>
-          <Button type="primary" shape="round" size="large">
+          {/* <Button type="primary" shape="round" size="large">
             Add More
-          </Button>
-          <div style={{ textAlign: 'left', padding: '10px', margin: '10px' }}>
+          </Button> */}
+          <Demographic
+            showDemographic={this.state.showDemographic}
+            setState={this.handleDemographic}
+            demographic={this.state.demographic}
+            addDemographic={this.addDemographic}
+          />
+          <div
+            style={{
+              textAlign: 'left',
+              //   paddingLeft: 20,
+              width: '45%',
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
             <Button
-              style={{ margin: '2px' }}
+              onClick={this.onSumbit}
+              style={{ margin: 0 }}
               type="primary"
               shape="round"
-              size="large"
+              size="small"
             >
               Submit
             </Button>
-            <Button type="primary" shape="round" size="large">
+            <Button
+              type="primary"
+              shape="round"
+              size="small"
+              style={{ margin: 0 }}
+              onClick={() => this.setState(defaultFilterState)}
+            >
               Reset Filters
             </Button>
           </div>
@@ -206,5 +250,47 @@ class BarGraph extends React.Component {
     );
   }
 }
+
+const Demographic = ({
+  showDemographic,
+  setState,
+  demographic,
+  addDemographic,
+}) => {
+  return (
+    <div style={{ paddingLeft: 0, marginBottom: 20, marginTop: 20 }}>
+      <div style={{ marginBottom: 10 }}>
+        <Checkbox onChange={setState}>Demographic</Checkbox>
+      </div>
+      {showDemographic && (
+        <Select
+          mode="multiple"
+          style={{ width: '100%' }}
+          placeholder="select one"
+          defaultValue={demographic}
+          onChange={addDemographic}
+          optionLabelProp="label"
+        >
+          <Select.Option value="black" label="Black">
+            <div className="demo-option-label-item">Black</div>
+          </Select.Option>
+          <Select.Option value="white" label="White">
+            <div className="demo-option-label-item">White</div>
+          </Select.Option>
+          <Select.Option value="asian" label="Asian">
+            <div className="demo-option-label-item">Asian</div>
+          </Select.Option>
+          <Select.Option value="pacific islander" label="Pacific Islander">
+            <div className="demo-option-label-item">Pacific Islander</div>
+          </Select.Option>
+
+          <Select.Option value="other" label="Other">
+            <div className="demo-option-label-item">Other</div>
+          </Select.Option>
+        </Select>
+      )}
+    </div>
+  );
+};
 
 export default BarGraph;
