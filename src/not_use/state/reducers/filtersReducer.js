@@ -1,4 +1,4 @@
-import { UPDATE_FILTERS } from '../actions/';
+import { UPDATE_FILTERS } from '../actions';
 
 const initialIncidents = {
   energyDevices: true,
