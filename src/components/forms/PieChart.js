@@ -1,40 +1,20 @@
 // libraries
 import React from 'react';
-import { Select, Form, Input, Button, Checkbox } from 'antd';
-import axios from 'axios';
+import { Select, Form, Button } from 'antd';
+import { useDispatch } from 'react-redux';
 
 // helpers
 import states from '../../helpers/states';
+import { SELECT_STATE } from '../../reducers/graph_reducer';
 
+// collect a US state abbriviation and send it to Visualization for rendering on submit
 export default function PieChart() {
   const { Option } = Select;
 
-  //state_dropdown options and functions
-  function onChange(value) {
-    console.log(`selected ${value}`);
-  }
-
-  function onBlur() {
-    console.log('blur');
-  }
-
-  function onFocus() {
-    console.log('focus');
-  }
-
-  function onSearch(val) {
-    console.log('search:', val);
-  }
-
-  function states_dropdown() {
-    return states.map(function(state) {
-      return <Option value={state.value}>{state.label}</Option>;
-    });
-  }
+  // redux hooks - save state abbreviation on the global prop
+  const dispatch = useDispatch();
 
   // form options and functions
-  const [form] = Form.useForm();
-
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
@@ -43,17 +23,20 @@ export default function PieChart() {
     wrapperCol: { offset: 8, span: 16 },
   };
 
-  const onFinish = values => {
-    console.log('Success:', values);
-    // values.select_state;
-    // axios.get();
-  };
+  //helper functions
+  function states_dropdown() {
+    // Make an array of options base of the different states
+    return states.map(function(a_state) {
+      return (
+        <Option value={a_state.value} key={a_state.value}>
+          {a_state.label}
+        </Option>
+      );
+    });
+  }
 
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
-  };
-  const onReset = () => {
-    form.resetFields();
+  const onFinish = values => {
+    dispatch({ type: SELECT_STATE, payload: values.select_state });
   };
 
   return (
@@ -63,9 +46,7 @@ export default function PieChart() {
         name="basic"
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       >
-        {/* select a state */}
         <Form.Item
           name="select_state"
           label="Select a state"
@@ -80,10 +61,6 @@ export default function PieChart() {
             style={{ width: 200 }}
             placeholder="Select a state"
             optionFilterProp="children"
-            onChange={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            onSearch={onSearch}
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
@@ -91,15 +68,10 @@ export default function PieChart() {
             {states_dropdown()}
           </Select>
         </Form.Item>
-        {/* submit form*/}
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
-          {/* button not resetting when lick*/}
-          {/* <Button htmlType="button" onClick={onReset}>
-            Reset
-          </Button> */}
         </Form.Item>
       </Form>
     </div>
