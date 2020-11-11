@@ -9,6 +9,8 @@ export const initialState = {
   start_year: '',
   end_year: '',
   stateValue: '',
+  zipcode: '',
+  city: '',
   sort_by: '',
   showDemographic: false,
 };
