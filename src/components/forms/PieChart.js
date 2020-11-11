@@ -1,19 +1,21 @@
 // libraries
 import React from 'react';
 import { Select, Form, Button } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 // helpers
 import states from '../../helpers/states';
-import { SELECT_STATE } from '../../reducers/graph_reducer';
+import { ADD_PIE_CHART } from '../../reducers/graph_reducer';
+
+const { Option } = Select;
 
 // collect a US state abbriviation and send it to Visualization for rendering on submit
 export default function PieChart() {
-  const { Option } = Select;
-
   // redux hooks - save state abbreviation on the global prop
   const dispatch = useDispatch();
-
+  const state = useSelector(state => state);
+  console.log(state);
   // form options and functions
   const layout = {
     labelCol: { span: 8 },
@@ -24,56 +26,65 @@ export default function PieChart() {
   };
 
   //helper functions
-  function states_dropdown() {
-    // Make an array of options base of the different states
-    return states.map(function(a_state) {
-      return (
-        <Option value={a_state.value} key={a_state.value}>
-          {a_state.label}
-        </Option>
-      );
-    });
-  }
+  // use the form inputs to make a call to the backend
+  //save resp into the global props
+  const onFinish = async values => {
+    // GET Plotly data from the backend server
+    let pie_chart = await axios.post(
+      'https://hrf-d-api.herokuapp.com/ds_server/us_map',
+      {
+        user_input: values.select_state,
+      }
+    );
 
-  const onFinish = values => {
-    dispatch({ type: SELECT_STATE, payload: values.select_state });
+    //onwrap pie_chart resp data and parse the json into js
+    pie_chart = JSON.parse(pie_chart.data.unemployment_rate);
+
+    // save data on global props
+    dispatch({ type: ADD_PIE_CHART, payload: pie_chart });
   };
 
   return (
-    <div>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
+    <Form
+      {...layout}
+      name="basic"
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+    >
+      <Form.Item
+        name="select_state"
+        label="Select a state"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
       >
-        <Form.Item
-          name="select_state"
-          label="Select a state"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
+        <Select
+          showSearch
+          style={{ width: 200 }}
+          placeholder="Select a state"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
         >
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            placeholder="Select a state"
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            {states_dropdown()}
-          </Select>
-        </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+          {// Make an array of options base of the different states
+          states.map(function(a_state) {
+            return (
+              <Option value={a_state.value} key={a_state.value}>
+                {a_state.label}
+              </Option>
+            );
+          })}
+          ;
+        </Select>
+      </Form.Item>
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   );
 }
