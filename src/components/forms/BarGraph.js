@@ -2,7 +2,10 @@ import React from 'react';
 import { Radio, Button, Card } from 'antd';
 import { DatePicker, Space, Input, Select, Checkbox } from 'antd';
 import moment from 'moment';
+import axios from 'axios';
+
 // import './globalstyle.css';
+const DS_SERVER_API = 'https://labs27-d-hrf-api.herokuapp.com';
 
 const options = [
   { label: 'Map', value: 'Map' },
@@ -112,6 +115,24 @@ class BarGraph extends React.Component {
       ...prev,
       demographic: value,
     }));
+  };
+
+  onSubmit = async () => {
+    const { start_date, end_date } = this.state;
+    const body = {
+      start_date,
+      end_date,
+      sort_by: 'Demographic',
+    };
+    try {
+      const { data } = await axios.post(
+        `${DS_SERVER_API}/ds_server/us_bar`,
+        body
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   render() {
