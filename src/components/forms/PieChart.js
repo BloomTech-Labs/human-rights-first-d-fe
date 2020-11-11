@@ -1,40 +1,22 @@
 // libraries
 import React from 'react';
-import { Select, Form, Input, Button, Checkbox } from 'antd';
+import { Select, Form, Button } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 // helpers
 import states from '../../helpers/states';
+import { ADD_PIE_CHART } from '../../reducers/graph_reducer';
 
+const { Option } = Select;
+
+// collect a US state abbriviation and send it to Visualization for rendering on submit
 export default function PieChart() {
-  const { Option } = Select;
-
-  //state_dropdown options and functions
-  function onChange(value) {
-    console.log(`selected ${value}`);
-  }
-
-  function onBlur() {
-    console.log('blur');
-  }
-
-  function onFocus() {
-    console.log('focus');
-  }
-
-  function onSearch(val) {
-    console.log('search:', val);
-  }
-
-  function states_dropdown() {
-    return states.map(function(state) {
-      return <Option value={state.value}>{state.label}</Option>;
-    });
-  }
-
+  // redux hooks - save state abbreviation on the global prop
+  const dispatch = useDispatch();
+  const state = useSelector(state => state);
+  console.log(state);
   // form options and functions
-  const [form] = Form.useForm();
-
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
@@ -43,65 +25,66 @@ export default function PieChart() {
     wrapperCol: { offset: 8, span: 16 },
   };
 
-  const onFinish = values => {
-    console.log('Success:', values);
-    // values.select_state;
-    // axios.get();
-  };
+  //helper functions
+  // use the form inputs to make a call to the backend
+  //save resp into the global props
+  const onFinish = async values => {
+    // GET Plotly data from the backend server
+    let pie_chart = await axios.post(
+      'https://hrf-d-api.herokuapp.com/ds_server/us_map',
+      {
+        user_input: values.select_state,
+      }
+    );
 
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
-  };
-  const onReset = () => {
-    form.resetFields();
+    //onwrap pie_chart resp data and parse the json into js
+    pie_chart = JSON.parse(pie_chart.data.unemployment_rate);
+
+    // save data on global props
+    dispatch({ type: ADD_PIE_CHART, payload: pie_chart });
   };
 
   return (
-    <div>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
+    <Form
+      {...layout}
+      name="basic"
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+    >
+      <Form.Item
+        name="select_state"
+        label="Select a state"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
       >
-        {/* select a state */}
-        <Form.Item
-          name="select_state"
-          label="Select a state"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
+        <Select
+          showSearch
+          style={{ width: 200 }}
+          placeholder="Select a state"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
         >
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            placeholder="Select a state"
-            optionFilterProp="children"
-            onChange={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            onSearch={onSearch}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            {states_dropdown()}
-          </Select>
-        </Form.Item>
-        {/* submit form*/}
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-          {/* button not resetting when lick*/}
-          {/* <Button htmlType="button" onClick={onReset}>
-            Reset
-          </Button> */}
-        </Form.Item>
-      </Form>
-    </div>
+          {// Make an array of options base of the different states
+          states.map(function(a_state) {
+            return (
+              <Option value={a_state.value} key={a_state.value}>
+                {a_state.label}
+              </Option>
+            );
+          })}
+          ;
+        </Select>
+      </Form.Item>
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   );
 }
