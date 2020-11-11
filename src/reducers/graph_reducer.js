@@ -8,15 +8,15 @@ export const SELECT_STATE = 'SELECT_STATE';
 export const props = {
   bar_graph: {
     data: [],
-    layout: [],
+    layout: {},
   },
   map: {
     data: [],
-    layout: [],
+    layout: {},
   },
   pie_chart: {
     data: [],
-    layout: [],
+    layout: {},
   },
   select_state: '',
 };
@@ -32,17 +32,17 @@ export default function Graph_reducer(state = props, action) {
     case ADD_BAR_GRAPH:
       return {
         ...state,
-        bar_graph: state.bar_graph_data,
+        bar_graph: action.payload,
       };
     case ADD_MAP:
       return {
         ...state,
-        map: state.map_data,
+        map: action.payload,
       };
     case ADD_PIE_CHART:
       return {
         ...state,
-        pie_chart: state.pie_chart_data,
+        pie_chart: action.payload,
       };
     default:
       return state;
