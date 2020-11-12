@@ -1,24 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import { applyMiddleware, createStore } from 'redux';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import reducer from './state/reducers/';
 import thunk from 'redux-thunk';
 import { Button, Layout } from 'antd';
-import Filter_forms from './components/Filter_forms';
+// import Filter_forms from './components/Filter_forms';
 
 //components
 import Header from './components/Header';
 import Loading from './components/Loading';
 import Visualization from './components/Visualization';
+import form_reducers from './state/reducers/graph_reducers';
 
 //CSS styles
 import 'antd/dist/antd.less';
 import './styles/normalize.css';
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const store = createStore(form_reducers);
 const { Footer, Content } = Layout;
 
 ReactDOM.render(
@@ -39,24 +40,6 @@ function App() {
       <Loading />
       <Visualization />
     </>
-
-    // <Router>
-    //   <Layout className="layout">
-    //     <NavBar />
-    //     <Switch>
-    //       <Route exact path="/">
-    //         <Link to="/filter" style={{ textAlign: 'right' }}>
-    //           <Button type="primary">Open Filters</Button>
-    //         </Link>
-    //       </Route>
-    //       <Route exact path="/filter">
-    //         <FilterSearch />
-    //       </Route>
-    //     </Switch>
-    //     <Content style={{ textAlign: 'center' }}>Map Goes Here </Content>
-    //     <Footer style={{ textAlign: 'center' }}>Copyright</Footer>
-    //   </Layout>
-    // </Router>
   );
 }
 

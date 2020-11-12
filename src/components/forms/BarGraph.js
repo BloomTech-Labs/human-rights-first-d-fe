@@ -1,74 +1,17 @@
-import React from 'react';
-import { Radio, Button, Card } from 'antd';
+import React, { useState } from 'react';
+import { Button, Card } from 'antd';
 import { DatePicker, Space, Input, Select, Checkbox } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 
+import states from '../../helpers/states';
+import { ADD_BAR_GRAPH } from '../../state/reducers/graph_reducers';
+import { useDispatch } from 'react-redux';
+
 // import './globalstyle.css';
 const DS_SERVER_API = 'https://labs27-d-hrf-api.herokuapp.com';
 
-const options = [
-  { label: 'Map', value: 'Map' },
-  { label: 'Bar', value: 'Bar' },
-  { label: 'Pie Chart ', value: 'Pie Chart' },
-  { label: 'Other Chart', value: 'Other Chart' },
-];
-const incidents = ['Most Incident', 'Least Incident'];
 const { RangePicker } = DatePicker;
-
-const states = [
-  { label: 'AL', value: 'AL' },
-  { label: 'AK', value: 'AK' },
-  { label: 'AZ', value: 'AZ' },
-  { label: 'AR', value: 'AR' },
-  { label: 'CA', value: 'CA' },
-  { label: 'CO', value: 'CO' },
-  { label: 'CT', value: 'CT' },
-  { label: 'DE', value: 'DE' },
-  { label: 'DC', value: 'DC' },
-  { label: 'FL', value: 'FL' },
-  { label: 'GA', value: 'GA' },
-  { label: 'HI', value: 'HI' },
-  { label: 'ID', value: 'ID' },
-  { label: 'IL', value: 'IL' },
-  { label: 'IN', value: 'IN' },
-  { label: 'IA', value: 'IA' },
-  { label: 'KS', value: 'KS' },
-  { label: 'KY', value: 'KY' },
-  { label: 'LA', value: 'LA' },
-  { label: 'ME', value: 'ME' },
-  { label: 'MD', value: 'MD' },
-  { label: 'MA', value: 'MA' },
-  { label: 'MI', value: 'MI' },
-  { label: 'MN', value: 'MN' },
-  { label: 'MS', value: 'MS' },
-  { label: 'MO', value: 'MO' },
-  { label: 'MT', value: 'MT' },
-  { label: 'NE', value: 'NE' },
-  { label: 'NV', value: 'NV' },
-  { label: 'NH', value: 'NH' },
-  { label: 'NJ', value: 'NJ' },
-  { label: 'NM', value: 'NM' },
-  { label: 'NY', value: 'NY' },
-  { label: 'NC', value: 'NC' },
-  { label: 'ND', value: 'ND' },
-  { label: 'OH', value: 'OH' },
-  { label: 'OK', value: 'OK' },
-  { label: 'OR', value: 'OR' },
-  { label: 'PA', value: 'PA' },
-  { label: 'RI', value: 'RI' },
-  { label: 'SC', value: 'SC' },
-  { label: 'SD', value: 'SD' },
-  { label: 'TN', value: 'TN' },
-  { label: 'TX', value: 'TX' },
-  { label: 'UT', value: 'UT' },
-  { label: 'VT', value: 'VT' },
-  { label: 'VA', value: 'VA' },
-  { label: 'WA', value: 'WA' },
-  { label: 'WV', value: 'WV' },
-  { label: 'WI', value: 'WI' },
-  { label: 'WY', value: 'WY' },
-];
 
 const defaultFilterState = {
   //   mapValue: 'Map',
@@ -84,192 +27,200 @@ const defaultFilterState = {
   end_year: '2020',
 };
 
-class BarGraph extends React.Component {
-  state = {
-    ...defaultFilterState,
-  };
+export default function BarGraph() {
+  //react hooks
+  const dispatch = useDispatch();
+  const [state, setState] = useState(defaultFilterState);
+
+  console.log(state);
 
   // FORM ACTIONS
-  handleChange = value => {
-    this.setState({
+  const handleChange = value => {
+    setState({
       stateValue: value,
     });
     console.log(`selected ${value}`);
   };
-  onRadioChange = e => {
+  const onRadioChange = e => {
     console.log('radio checked', e.target.value);
     const { name, value } = e.target;
-    this.setState({
+    setState({
       [name]: value,
     });
   };
-  handleDemographic = () => {
-    this.setState(prev => ({
+  const handleDemographic = () => {
+    setState(prev => ({
       ...prev,
       showDemographic: !prev.showDemographic,
     }));
   };
 
-  addDemographic = value => {
-    this.setState(prev => ({
+  const addDemographic = value => {
+    setState(prev => ({
       ...prev,
       demographic: value,
     }));
   };
 
-  onSubmit = async () => {
-    const { start_date, end_date } = this.state;
-    const body = {
-      start_date,
-      end_date,
-      sort_by: 'Demographic',
-    };
-    try {
-      const { data } = await axios.post(
-        `${DS_SERVER_API}/ds_server/us_bar`,
-        body
-      );
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+  const onSubmit = async values => {
+    // get plotly data from the backedn server
+    let bar_graph = await axios.post(
+      'https://hrf-d-api.herokuapp.com/ds_server/us_map',
+      { user_input: values.select_state }
+    );
+
+    dispatch({ type: ADD_BAR_GRAPH, payload: bar_graph });
+
+    //   const { start_date, end_date } = state;
+    //   const body = {
+    //     start_date,
+    //     end_date,
+    //     sort_by: 'Demographic',
+    //   };
+    //   try {
+    //     const { data } = await axios.post(
+    //       `${DS_SERVER_API}/ds_server/us_bar`,
+    //       body
+    //     );
+    //     console.log(data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
   };
 
-  render() {
-    const { value } = this.state;
-    return (
-      <div className="main">
-        <Card title="" style={{ width: 500 }}>
-          <div className="dates">
-            <div>
-              <Space direction="horizontal" size={12}>
-                <RangePicker
-                  defaultValue={[
-                    moment(this.state.start_date),
-                    moment(this.state.end_date),
-                  ]}
-                  onChange={date => {
-                    if (date.length === 2) {
-                      const start_date = moment(date[0]).format('yyyy-M-D');
-                      const end_date = moment(date[1]).format('yyyy-M-D');
-                      this.setState({
-                        start_date,
-                        end_date,
-                      });
-                    }
-                  }}
-                />
-                <RangePicker
-                  defaultValue={[
-                    moment(this.state.start_date),
-                    moment(this.state.end_date),
-                  ]}
-                  picker="year"
-                  onChange={date => {
-                    if (date.length === 2) {
-                      const start_year = moment(date[0]).format('yyyy');
-                      const end_year = moment(date[1]).format('yyyy');
-                      this.setState({
-                        start_year,
-                        end_year,
-                      });
-                    }
-                  }}
-                />
-              </Space>
-            </div>
+  // const { value } = state;
+  return (
+    <div className="main">
+      <Card title="" style={{ width: 500 }}>
+        <div className="dates">
+          <div>
+            <Space direction="horizontal" size={12}>
+              <RangePicker
+                defaultValue={[
+                  moment(state.start_date),
+                  moment(state.end_date),
+                ]}
+                onChange={date => {
+                  if (date.length === 2) {
+                    const start_date = moment(date[0]).format('yyyy-M-D');
+                    const end_date = moment(date[1]).format('yyyy-M-D');
+                    setState({
+                      start_date,
+                      end_date,
+                    });
+                  }
+                }}
+              />
+              <RangePicker
+                defaultValue={[
+                  moment(state.start_date),
+                  moment(state.end_date),
+                ]}
+                picker="year"
+                onChange={date => {
+                  if (date.length === 2) {
+                    const start_year = moment(date[0]).format('yyyy');
+                    const end_year = moment(date[1]).format('yyyy');
+                    setState({
+                      start_year,
+                      end_year,
+                    });
+                  }
+                }}
+              />
+            </Space>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              aligItems: 'center',
-              justifyContent: 'space-between',
-              paddingTop: '20px',
-            }}
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            aligItems: 'center',
+            justifyContent: 'space-between',
+            paddingTop: '20px',
+          }}
+        >
+          <Select
+            style={{ width: '15%', alignSelf: 'flex-start' }}
+            defaultValue={[`${state.stateValue}`]}
+            value={state.stateValue}
+            onChange={handleChange}
+            optionLabelProp="label"
           >
-            <Select
-              style={{ width: '15%', alignSelf: 'flex-start' }}
-              defaultValue={[`${this.state.stateValue}`]}
-              value={this.state.stateValue}
-              onChange={this.handleChange}
-              optionLabelProp="label"
-            >
-              {states.map(state => (
-                <Select.Option
-                  key={state.label}
-                  value={state.value}
-                  label={`${state.label}`}
-                >
-                  <div className="demo-option-label-item">{state.value}</div>
-                </Select.Option>
-              ))}
-            </Select>
-            <Input
-              style={{
-                width: '25%',
-                alignSelf: 'flex-start',
-                margin: '0 10px',
-              }}
-              value={this.state.city}
-              placeholder="City"
-              onChange={event => {
-                this.setState({
-                  city: event.target.value,
-                });
-              }}
-            />
-            <Input
-              style={{ width: '25%', alignSelf: 'flex-start' }}
-              placeholder="Zipcode"
-              value={this.state.zipcode}
-              onChange={event => {
-                this.setState({
-                  zipcode: event.target.value,
-                });
-              }}
-            />
-          </div>
-          {/* <Button type="primary" shape="round" size="large">
+            {states.map(state => (
+              <Select.Option
+                key={state.label}
+                value={state.value}
+                label={`${state.label}`}
+              >
+                <div className="demo-option-label-item">{state.value}</div>
+              </Select.Option>
+            ))}
+          </Select>
+          <Input
+            style={{
+              width: '25%',
+              alignSelf: 'flex-start',
+              margin: '0 10px',
+            }}
+            value={state.city}
+            placeholder="City"
+            onChange={event => {
+              setState({
+                city: event.target.value,
+              });
+            }}
+          />
+          <Input
+            style={{ width: '25%', alignSelf: 'flex-start' }}
+            placeholder="Zipcode"
+            value={state.zipcode}
+            onChange={event => {
+              setState({
+                zipcode: event.target.value,
+              });
+            }}
+          />
+        </div>
+        {/* <Button type="primary" shape="round" size="large">
             Add More
           </Button> */}
-          <Demographic
-            showDemographic={this.state.showDemographic}
-            setState={this.handleDemographic}
-            demographic={this.state.demographic}
-            addDemographic={this.addDemographic}
-          />
-          <div
-            style={{
-              textAlign: 'left',
-              //   paddingLeft: 20,
-              width: '45%',
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
+        <Demographic
+          showDemographic={state.showDemographic}
+          setState={handleDemographic}
+          demographic={state.demographic}
+          addDemographic={addDemographic}
+        />
+        <div
+          style={{
+            textAlign: 'left',
+            //   paddingLeft: 20,
+            width: '45%',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Button
+            onClick={onSubmit}
+            style={{ margin: 0 }}
+            type="primary"
+            shape="round"
+            size="small"
           >
-            <Button
-              onClick={this.onSumbit}
-              style={{ margin: 0 }}
-              type="primary"
-              shape="round"
-              size="small"
-            >
-              Submit
-            </Button>
-            <Button
-              type="primary"
-              shape="round"
-              size="small"
-              style={{ margin: 0 }}
-              onClick={() => this.setState(defaultFilterState)}
-            >
-              Reset Filters
-            </Button>
-          </div>
-        </Card>
-      </div>
-    );
-  }
+            Submit
+          </Button>
+          <Button
+            type="primary"
+            shape="round"
+            size="small"
+            style={{ margin: 0 }}
+            onClick={() => setState(defaultFilterState)}
+          >
+            Reset Filters
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
 }
 
 const Demographic = ({
@@ -313,5 +264,3 @@ const Demographic = ({
     </div>
   );
 };
-
-export default BarGraph;
