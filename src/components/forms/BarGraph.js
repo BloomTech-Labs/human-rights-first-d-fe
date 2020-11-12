@@ -1,45 +1,75 @@
 import React, { useState } from 'react';
-import { Button, Card } from 'antd';
-import { DatePicker, Space, Input, Select, Checkbox } from 'antd';
+import { Radio, DatePicker, Button, Form, Select, Checkbox } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 
-import states from '../../helpers/states';
 import { ADD_BAR_GRAPH } from '../../state/reducers/graph_reducers';
 import { useDispatch } from 'react-redux';
-
-// import './globalstyle.css';
-const DS_SERVER_API = 'https://labs27-d-hrf-api.herokuapp.com';
 
 const { RangePicker } = DatePicker;
 
 const defaultFilterState = {
-  //   mapValue: 'Map',
-  //   incidentValue: 'Most Incident',
-  stateValue: '',
-  city: '',
-  zipcode: '',
-  showDemographic: false,
-  demographic: ['other'],
   start_date: '2013-01-01',
   end_date: '2019-01-01',
-  start_year: '2020',
-  end_year: '2020',
+  group_by: { National: true },
+  asc: true,
 };
+const ascOptions = [
+  {
+    label: 'Most Reports',
+    value: true,
+  },
+  {
+    label: 'Least Reports',
+    value: false,
+  },
+];
+const focusOn = [
+  {
+    label: 'State',
+    value: true,
+  },
+  {
+    label: 'National',
+    value: true,
+  },
+  {
+    label: 'Zipcode',
+    value: true,
+  },
+  {
+    label: 'City',
+    value: true,
+  },
+];
 
 export default function BarGraph() {
   //react hooks
   const dispatch = useDispatch();
   const [state, setState] = useState(defaultFilterState);
 
-  console.log(state);
-
   // FORM ACTIONS
-  const handleChange = value => {
+
+  const layout = {
+    labelCol: {
+      span: 8,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+  };
+  // const tailLayout = {
+  //   wrapperCol: {
+  //     offset: 8,
+  //     span: 16,
+  //   },
+  // };
+  const onChange = event => {
     setState({
-      stateValue: value,
+      ...state,
+      [event.target.name]: event.target.value,
     });
-    console.log(`selected ${value}`);
+    console.log(state);
   };
   const onRadioChange = e => {
     console.log('radio checked', e.target.value);
@@ -62,164 +92,89 @@ export default function BarGraph() {
     }));
   };
 
-  const onSubmit = async values => {
+  const onFinish = async values => {
     // get plotly data from the backedn server
     let bar_graph = await axios.post(
-      'https://hrf-d-api.herokuapp.com/ds_server/us_map',
+      'https://hrf-d-api.herokuapp.com/ds_server/us_bar',
       { user_input: values.select_state }
     );
 
-    dispatch({ type: ADD_BAR_GRAPH, payload: bar_graph });
+    bar_graph = JSON.parse(bar_graph.data.unemloyment_rate);
 
-    //   const { start_date, end_date } = state;
-    //   const body = {
-    //     start_date,
-    //     end_date,
-    //     sort_by: 'Demographic',
-    //   };
-    //   try {
-    //     const { data } = await axios.post(
-    //       `${DS_SERVER_API}/ds_server/us_bar`,
-    //       body
-    //     );
-    //     console.log(data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
+    dispatch({ type: ADD_BAR_GRAPH, payload: bar_graph });
   };
 
-  // const { value } = state;
   return (
-    <div className="main">
-      <Card title="" style={{ width: 500 }}>
-        <div className="dates">
-          <div>
-            <Space direction="horizontal" size={12}>
-              <RangePicker
-                defaultValue={[
-                  moment(state.start_date),
-                  moment(state.end_date),
-                ]}
-                onChange={date => {
-                  if (date.length === 2) {
-                    const start_date = moment(date[0]).format('yyyy-M-D');
-                    const end_date = moment(date[1]).format('yyyy-M-D');
-                    setState({
-                      start_date,
-                      end_date,
-                    });
-                  }
-                }}
-              />
-              <RangePicker
-                defaultValue={[
-                  moment(state.start_date),
-                  moment(state.end_date),
-                ]}
-                picker="year"
-                onChange={date => {
-                  if (date.length === 2) {
-                    const start_year = moment(date[0]).format('yyyy');
-                    const end_year = moment(date[1]).format('yyyy');
-                    setState({
-                      start_year,
-                      end_year,
-                    });
-                  }
-                }}
-              />
-            </Space>
-          </div>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            aligItems: 'center',
-            justifyContent: 'space-between',
-            paddingTop: '20px',
-          }}
-        >
-          <Select
-            style={{ width: '15%', alignSelf: 'flex-start' }}
-            defaultValue={[`${state.stateValue}`]}
-            value={state.stateValue}
-            onChange={handleChange}
-            optionLabelProp="label"
-          >
-            {states.map(state => (
-              <Select.Option
-                key={state.label}
-                value={state.value}
-                label={`${state.label}`}
-              >
-                <div className="demo-option-label-item">{state.value}</div>
-              </Select.Option>
-            ))}
-          </Select>
-          <Input
-            style={{
-              width: '25%',
-              alignSelf: 'flex-start',
-              margin: '0 10px',
-            }}
-            value={state.city}
-            placeholder="City"
-            onChange={event => {
-              setState({
-                city: event.target.value,
-              });
-            }}
-          />
-          <Input
-            style={{ width: '25%', alignSelf: 'flex-start' }}
-            placeholder="Zipcode"
-            value={state.zipcode}
-            onChange={event => {
-              setState({
-                zipcode: event.target.value,
-              });
-            }}
-          />
-        </div>
-        {/* <Button type="primary" shape="round" size="large">
-            Add More
-          </Button> */}
-        <Demographic
-          showDemographic={state.showDemographic}
-          setState={handleDemographic}
-          demographic={state.demographic}
-          addDemographic={addDemographic}
-        />
-        <div
-          style={{
-            textAlign: 'left',
-            //   paddingLeft: 20,
-            width: '45%',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Button
-            onClick={onSubmit}
-            style={{ margin: 0 }}
-            type="primary"
-            shape="round"
-            size="small"
-          >
-            Submit
-          </Button>
-          <Button
-            type="primary"
-            shape="round"
-            size="small"
-            style={{ margin: 0 }}
-            onClick={() => setState(defaultFilterState)}
-          >
-            Reset Filters
-          </Button>
-        </div>
-      </Card>
-    </div>
+    <Form
+      {...layout}
+      name="basic"
+      initialValues={{
+        remember: true,
+      }}
+      onFinish={onFinish}
+    >
+      {/* Start date and End Date */}
+      <RangePicker
+        defaultValue={[moment(state.start_date), moment(state.end_date)]}
+        onChange={date => {
+          if (date.length === 2) {
+            const start_date = moment(date[0]).format('yyyy-M-D');
+            const end_date = moment(date[1]).format('yyyy-M-D');
+            setState({
+              start_date,
+              end_date,
+            });
+          }
+        }}
+        name="date"
+      />
+
+      {/*  Ascending true or false */}
+      {/*  Title: Order By */}
+      {/*  Most reports and Least reports  */}
+      <Radio.Group
+        options={ascOptions}
+        onChange={onChange}
+        name="asc"
+        optionType="button"
+        buttonStyle="solid"
+      />
+
+      {/* Group By
+        - state
+        - national
+        - zipcode
+        - city
+      */}
+      <Radio.Group
+        options={focusOn}
+        onChange={onChange}
+        name="group_by"
+        optionType="button"
+        buttonStyle="solid"
+      />
+      {/* Title: Focus on   */}
+
+      {/*  Submit and the reset buttons */}
+      <Button
+        onClick={onFinish}
+        style={{ marginTop: '20px' }}
+        type="primary"
+        shape="round"
+        size="small"
+      >
+        Submit
+      </Button>
+      <Button
+        type="primary"
+        shape="round"
+        size="small"
+        style={{ margin: 0 }}
+        onClick={() => setState(defaultFilterState)}
+      >
+        Reset Filters
+      </Button>
+    </Form>
   );
 }
 
