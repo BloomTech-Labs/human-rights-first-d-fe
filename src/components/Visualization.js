@@ -26,7 +26,7 @@ export default function Visualization() {
       axios
         .post(' https://hrf-d-api.herokuapp.com/ds_server/us_map')
         .then(resp => {
-          setData(JSON.parse(resp.data.unemployment_rate));
+          setData(JSON.parse(resp.data));
         });
     }
     fetchDSData();
