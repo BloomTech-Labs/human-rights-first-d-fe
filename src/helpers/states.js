@@ -51,5 +51,4 @@ const states = [
   { label: 'WI', value: 'WI' },
   { label: 'WY', value: 'WY' },
 ];
-
 export default states;

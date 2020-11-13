@@ -1,21 +1,22 @@
 // libraries
 import React from 'react';
 import { Select, Form, Button } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 // helpers
 import states from '../../helpers/states';
-import { SELECT_STATE } from '../../state/reducers/graph_reducers';
-import { useDispatch } from 'react-redux';
+import { ADD_PIE_CHART } from '../../reducers/graph_reducer';
 
-// collects a US state abb and send it ot visualizaiton for rendering a submit
+const { Option } = Select;
+
+// collect a US state abbriviation and send it to Visualization for rendering on submit
 export default function PieChart() {
-  const { Option } = Select;
-
-  // react hooks
+  // redux hooks - save state abbreviation on the global prop
   const dispatch = useDispatch();
-
+  const state = useSelector(state => state);
+  console.log(state);
   // form options and functions
-  const [form] = Form.useForm();
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
@@ -24,61 +25,66 @@ export default function PieChart() {
     wrapperCol: { offset: 8, span: 16 },
   };
 
-  //state_dropdown options and functions
-  function onChange(value) {
-    console.log(`selected ${value}`);
-  }
-  function states_dropdown() {
-    return states.map(function(a_state) {
-      return (
-        <Option value={a_state.value} key={a_state.value}>
-          {a_state.label}
-        </Option>
-      );
-    });
-  }
+  //helper functions
+  // use the form inputs to make a call to the backend
+  //save resp into the global props
+  const onFinish = async values => {
+    // GET Plotly data from the backend server
+    let pie_chart = await axios.post(
+      'https://hrf-d-api.herokuapp.com/ds_server/us_map',
+      {
+        user_input: values.select_state,
+      }
+    );
 
-  const onFinish = values => {
-    dispatch({ type: SELECT_STATE, payload: values.select_state });
+    //onwrap pie_chart resp data and parse the json into js
+    pie_chart = JSON.parse(pie_chart.data.unemployment_rate);
+
+    // save data on global props
+    dispatch({ type: ADD_PIE_CHART, payload: pie_chart });
   };
 
   return (
-    <div>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
+    <Form
+      {...layout}
+      name="basic"
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+    >
+      <Form.Item
+        name="select_state"
+        label="Select a state"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
       >
-        {/* select a state */}
-        <Form.Item
-          name="select_state"
-          label="Select a state"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
+        <Select
+          showSearch
+          style={{ width: 200 }}
+          placeholder="Select a state"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
         >
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            placeholder="Select a state"
-            optionFilterProp="children"
-            onChange={onChange}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            {states_dropdown()}
-          </Select>
-        </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+          {// Make an array of options base of the different states
+          states.map(function(a_state) {
+            return (
+              <Option value={a_state.value} key={a_state.value}>
+                {a_state.label}
+              </Option>
+            );
+          })}
+          ;
+        </Select>
+      </Form.Item>
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   );
 }

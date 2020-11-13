@@ -1,13 +1,18 @@
+//libraries
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
 
-import reducer from './state/reducers/';
+// redux hooks
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { Button, Layout } from 'antd';
 // import Filter_forms from './components/Filter_forms';
+import logger from 'redux-logger';
+
+// reducers
+import rootReducer from './reducers/combinedReducer';
+// import form_reducer from './reducers/graph_reducer';
 
 //components
 import Header from './components/Header';
@@ -18,17 +23,16 @@ import form_reducers from './state/reducers/graph_reducers';
 //CSS styles
 import 'antd/dist/antd.less';
 import './styles/normalize.css';
+import { mapReducer } from './reducers/map_reducer';
 
-const store = createStore(form_reducers);
-const { Footer, Content } = Layout;
+// apply redux hooks to react
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </Router>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
   </Provider>,
   document.getElementById('root')
 );

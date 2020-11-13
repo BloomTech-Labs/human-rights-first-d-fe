@@ -3,9 +3,10 @@
 import { combineReducers } from 'redux';
 import fetchIncidentsReducer from './fetchIncidentsReducer';
 import filters from './filtersReducer';
-import graph_reducers from './graph_reducers';
+import { mapReducer as map } from './mapReducer';
+
 export default combineReducers({
   fetchIncidentsReducer,
   filters,
-  graph_reducers,
+  map,
 });
