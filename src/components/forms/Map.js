@@ -11,18 +11,11 @@ import {
   Select,
 } from 'antd';
 import Plot from 'react-plotly.js';
-import {
-  ADD_MAP,
-  ADD_GENDER,
-  ADD_ARMED,
-  ADD_DEMOGRAPHIC,
-} from '../../reducers/map_reducer';
 import states from '../../helpers/states';
 
-import { mapSelection } from '../../reducers/mapActions';
+import { mapSelection } from '../../state/actions/mapActions';
 
 // helpers
-
 const { Option } = Select;
 
 const options = [{ label: 'Map', value: 'Map' }];
@@ -37,16 +30,17 @@ function handleMenuClick(e) {
 
 export default function Map() {
   const dispatch = useDispatch();
-  const maps = useSelector(state => state);
+  const mapData = useSelector(state => state.map.data);
+  const mapLayout = useSelector(state => state.map.layout);
 
   // helper function
   useEffect(() => {
-    dispatch(mapSelection(maps));
+    dispatch(mapSelection());
   }, []);
 
   return (
     <div className="main">
-      <Plot data={maps.data} layout={maps.layout} />
+      <Plot data={mapData} layout={mapLayout} />
 
       <Card title="" style={{ width: 500 }}>
         <div className="dates">
