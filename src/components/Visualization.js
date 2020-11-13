@@ -1,42 +1,27 @@
 //libraries
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-
-const initialState = {
-  data: [],
-  layout: {},
-  frames: [],
-  config: {
-    displaylogo: false,
-    displayModeBar: false,
-  },
-};
+import { useSelector, useDispatch } from 'react-redux';
+import { mapSelection } from '../state/actions/mapActions';
+// import { ADD_MAP, mapReducer } from '../reducers/map_reducer';
+// import { mapSelection } from '../reducers/mapActions';
 
 export default function Visualization() {
   //states
-  const props = useSelector(state => state);
-  console.log(props);
-  const [data, setData] = useState(initialState);
+  const mapData = useSelector(state => state.map.data);
+  const mapLayout = useSelector(state => state.map.layout);
 
-  //default reder to map
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    function fetchDSData() {
-      axios
-        .post(' https://hrf-d-api.herokuapp.com/ds_server/us_map')
-        .then(resp => {
-          setData(JSON.parse(resp.data.unemployment_rate));
-        });
-    }
-    fetchDSData();
+    dispatch(mapSelection());
+    // console.log('map select', mapData);
   }, []);
 
-  // if one of the gloval pros for a chart changes, render that prop
-  useEffect(() => {
-    setData(props.pie_chart);
-  }, [props.pie_chart]);
-
   //Todo: make map full width and height
-  return <Plot data={data.data} layout={data.layout} />;
+  return (
+    <div>
+      <Plot data={mapData} layout={mapLayout} />
+    </div>
+  );
 }
