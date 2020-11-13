@@ -1,10 +1,29 @@
-import React from 'react';
-import { Radio, Button, Card, Menu } from 'antd';
-import { DatePicker, Space, Input } from 'antd';
-// import './globalstyle.css';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  DatePicker,
+  Space,
+  Input,
+  Button,
+  Card,
+  Menu,
+  message,
+  Select,
+} from 'antd';
+import Plot from 'react-plotly.js';
+import {
+  ADD_MAP,
+  ADD_GENDER,
+  ADD_ARMED,
+  ADD_DEMOGRAPHIC,
+} from '../../reducers/map_reducer';
+import states from '../../helpers/states';
 
-import { Dropdown, message, Tooltip } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { mapSelection } from '../../reducers/mapActions';
+
+// helpers
+
+const { Option } = Select;
 
 const options = [{ label: 'Map', value: 'Map' }];
 const { RangePicker } = DatePicker;
@@ -16,149 +35,107 @@ function handleMenuClick(e) {
   console.log('click', e);
 }
 
-const states = [
-  { label: 'AL', value: 'AL' },
-  { label: 'AK', value: 'AK' },
-  { label: 'AZ', value: 'AZ' },
-  { label: 'AR', value: 'AR' },
-  { label: 'CA', value: 'CA' },
-  { label: 'CO', value: 'CO' },
-  { label: 'CT', value: 'CT' },
-  { label: 'DE', value: 'DE' },
-  { label: 'DC', value: 'DC' },
-  { label: 'FL', value: 'FL' },
-  { label: 'GA', value: 'GA' },
-  { label: 'HI', value: 'HI' },
-  { label: 'ID', value: 'ID' },
-  { label: 'IL', value: 'IL' },
-  { label: 'IN', value: 'IN' },
-  { label: 'IA', value: 'IA' },
-  { label: 'KS', value: 'KS' },
-  { label: 'KY', value: 'KY' },
-  { label: 'LA', value: 'LA' },
-  { label: 'ME', value: 'ME' },
-  { label: 'MD', value: 'MD' },
-  { label: 'MA', value: 'MA' },
-  { label: 'MI', value: 'MI' },
-  { label: 'MN', value: 'MN' },
-  { label: 'MS', value: 'MS' },
-  { label: 'MO', value: 'MO' },
-  { label: 'MT', value: 'MT' },
-  { label: 'NE', value: 'NE' },
-  { label: 'NV', value: 'NV' },
-  { label: 'NH', value: 'NH' },
-  { label: 'NJ', value: 'NJ' },
-  { label: 'NM', value: 'NM' },
-  { label: 'NY', value: 'NY' },
-  { label: 'NC', value: 'NC' },
-  { label: 'ND', value: 'ND' },
-  { label: 'OH', value: 'OH' },
-  { label: 'OK', value: 'OK' },
-  { label: 'OR', value: 'OR' },
-  { label: 'PA', value: 'PA' },
-  { label: 'RI', value: 'RI' },
-  { label: 'SC', value: 'SC' },
-  { label: 'SD', value: 'SD' },
-  { label: 'TN', value: 'TN' },
-  { label: 'TX', value: 'TX' },
-  { label: 'UT', value: 'UT' },
-  { label: 'VT', value: 'VT' },
-  { label: 'VA', value: 'VA' },
-  { label: 'WA', value: 'WA' },
-  { label: 'WV', value: 'WV' },
-  { label: 'WI', value: 'WI' },
-  { label: 'WY', value: 'WY' },
-];
+export default function Map() {
+  const dispatch = useDispatch();
+  const maps = useSelector(state => state);
 
-const defaultFilterState = {
-  mapValue: 'Map',
-  incidentValue: 'Most Incident',
-  stateValue: '',
-  city: '',
-  zipcode: '',
-  showDemographic: false,
-  demographic: ['other'],
-  start_date: '2013-01-01',
-  end_date: '2019-01-01',
-  start_year: '2020',
-  end_year: '2020',
-};
+  // helper function
+  useEffect(() => {
+    dispatch(mapSelection(maps));
+  }, []);
 
-const menu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key="1">Armed</Menu.Item>
-    <Menu.Item key="2">UnArmed</Menu.Item>
-  </Menu>
-);
+  return (
+    <div className="main">
+      <Plot data={maps.data} layout={maps.layout} />
 
-const gender = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key="1">Male</Menu.Item>
-    <Menu.Item key="2">Female</Menu.Item>
-    <Menu.Item key="3">Undetermined</Menu.Item>
-  </Menu>
-);
-
-class Map extends React.Component {
-  state = {
-    ...defaultFilterState,
-  };
-
-  onChange = e => {
-    console.log('radio checked', e.target.value);
-    this.setState({
-      value: e.target.value,
-    });
-  };
-
-  render() {
-    const { value } = this.state;
-    return (
-      <div className="main">
-        <Card title="" style={{ width: 500 }}>
-          <div className="dates">
-            <div>
-              <Space direction="horizontal" size={12}>
-                <RangePicker size="large" />
-                <RangePicker size="large" picker="year" />
-              </Space>
-            </div>
+      <Card title="" style={{ width: 500 }}>
+        <div className="dates">
+          <div>
+            <Space direction="horizontal" size={12}>
+              <RangePicker size="large" />
+              <RangePicker size="large" picker="year" />
+            </Space>
           </div>
-          <div className="input-form">
-            <Dropdown overlay={menu}>
-              <Button type="primary" shape="round" size="large">
-                Armed ?
-                <DownOutlined />
-              </Button>
-            </Dropdown>
-            <Dropdown overlay={gender}>
-              <Button type="primary" shape="round" size="large">
-                Gender
-                <DownOutlined />
-              </Button>
-            </Dropdown>
-            <Input size="large" placeholder=" Select State" />
-          </div>
-          <Button type="primary" shape="round" size="large">
-            Add More
+        </div>
+        <div className="input-form">
+          <Select
+            showSearch
+            style={{ width: 200 }}
+            placeholder="Select a gender"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            <Option value="Male">Male</Option>
+            <Option value="Female">Female</Option>
+            <Option value="Undetermined">Undetermined</Option>
+          </Select>
+
+          <Select
+            showSearch
+            style={{ width: 200 }}
+            placeholder="Select if armed"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            <Option value="Armed">Armed</Option>
+            <Option value="Unarmed">Unarmed</Option>
+          </Select>
+          <Select
+            showSearch
+            style={{ width: 200 }}
+            placeholder=" Select State"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            {states.map(function(a_state) {
+              return (
+                <Option value={a_state.value} key={a_state.value}>
+                  {a_state.label}
+                </Option>
+              );
+            })}
+          </Select>
+          <Select
+            showSearch
+            style={{ width: 200 }}
+            placeholder="Select demographic"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            <Option value="Black">Black</Option>
+            <Option value="White">White</Option>
+            <Option value="Hispanic">Hispanic</Option>
+            <Option value="Pacific Islander">Pacific Islander</Option>
+            <Option value="Asian">Asian</Option>
+            <Option value="Native American">Native American</Option>
+            <Option value="Unknown Race">Unknown Race</Option>
+          </Select>
+        </div>
+        <Button type="primary" shape="round" size="large">
+          Add More
+        </Button>
+        <div style={{ textAlign: 'left', padding: '10px', margin: '10px' }}>
+          <Button
+            style={{ margin: '2px' }}
+            type="primary"
+            shape="round"
+            size="large"
+          >
+            Submit
           </Button>
-          <div style={{ textAlign: 'left', padding: '10px', margin: '10px' }}>
-            <Button
-              style={{ margin: '2px' }}
-              type="primary"
-              shape="round"
-              size="large"
-            >
-              Submit
-            </Button>
-            <Button type="primary" shape="round" size="large">
-              Reset Filters
-            </Button>
-          </div>
-        </Card>
-      </div>
-    );
-  }
+          <Button type="primary" shape="round" size="large">
+            Reset Filters
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
 }
-
-export default Map;

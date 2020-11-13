@@ -5,7 +5,7 @@ export const ADD_PIE_CHART = 'ADD_PIE_CHART';
 export const SELECT_STATE = 'SELECT_STATE';
 
 // initial states
-export const props = {
+export const initialState = {
   bar_graph: {
     data: [],
     layout: {},
@@ -22,7 +22,7 @@ export const props = {
 };
 
 // reducer
-export default function Graph_reducer(state = props, action) {
+export function Graph_reducer(state = initialState, action) {
   switch (action.type) {
     case SELECT_STATE:
       return {
