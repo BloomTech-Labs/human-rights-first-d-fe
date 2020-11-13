@@ -1,5 +1,6 @@
 // actions
-export const ADD_MAP = 'ADD_MAP';
+export const ADD_MAP_DATA = 'ADD_MAP_DATA';
+export const ADD_MAP_LAYOUT = 'ADD_MAP_LAYOUT';
 export const ADD_GENDER = 'ADD_GENDER';
 export const ADD_ARMED = 'ADD_ARMED';
 export const ADD_DEMOGRAPHIC = 'ADD_DEMOGRAPHIC';
@@ -16,12 +17,18 @@ export const initialState = {
 };
 
 // reducer
+//future add LOADING, ERROR also
 export function mapReducer(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_MAP':
+    case 'ADD_MAP_DATA':
       return {
         ...state,
         data: action.payload,
+      };
+    case 'ADD_MAP_LAYOUT':
+      return {
+        ...state,
+        layout: action.payload,
       };
     case 'ADD_GENDER':
       return {

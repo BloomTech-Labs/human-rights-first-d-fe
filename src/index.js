@@ -5,13 +5,12 @@ import ReactDOM from 'react-dom';
 // redux hooks
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import form_reducer from './reducers/graph_reducer';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 // reducers
-// import {Graph_reducer } from './reducers/graph_reducer'
-// import {combinedReducers} from './reducers/combinedReducer';
+import rootReducer from './reducers/combinedReducer';
+// import form_reducer from './reducers/graph_reducer';
 
 //components
 import Header from './components/Header';
@@ -24,7 +23,7 @@ import './styles/normalize.css';
 import { mapReducer } from './reducers/map_reducer';
 
 // apply redux hooks to react
-const store = createStore(mapReducer, applyMiddleware(thunk, logger));
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>
