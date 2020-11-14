@@ -1,20 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Radio, DatePicker, Button, Form, Input } from 'antd';
+import React, { useEffect } from 'react';
+import { Radio, DatePicker, Button, Form, Input, Select } from 'antd';
 import moment from 'moment';
 
-import Plot from 'react-plotly.js';
-import { barSelection } from '../../state/reducers/barActions';
+import { barSelection } from '../../state/actions/barActions';
 
 import { useSelector, useDispatch } from 'react-redux';
+import states from '../../helpers/states';
 
 const { RangePicker } = DatePicker;
 
-const defaultFilterState = {
-  start_date: '2013-01-01',
-  end_date: '2019-01-01',
-  group_by: { National: true },
-  asc: true,
-};
+const { Option } = Select;
+
 const ascOptions = [
   {
     label: 'Most Reports',
@@ -47,10 +43,9 @@ const focusOn = [
 export default function BarGraph() {
   //react hooks
   const dispatch = useDispatch();
-  const [state, setState] = useState(defaultFilterState);
+  // const [state, setState] = useState(initialState);
 
   const barData = useSelector(state => state.bar.data);
-
   const barLayout = useSelector(state => state.bar.layout);
 
   // helper functions
@@ -69,13 +64,13 @@ export default function BarGraph() {
     },
   };
 
-  const onChange = event => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.value,
-    });
-    console.log(state);
-  };
+  // const onChange = event => {
+  //   setState({
+  //     ...state,
+  //     [event.target.name]: event.target.value,
+  //   });
+  //   console.log(state);
+  // };
   // const onRadioChange = e => {
   //   console.log('radio checked', e.target.value);
   //   const { name, value } = e.target;
@@ -83,19 +78,24 @@ export default function BarGraph() {
   //     [name]: value,
   //   });
   // };
-  const handleDemographic = () => {
-    setState(prev => ({
-      ...prev,
-      showDemographic: !prev.showDemographic,
-    }));
-  };
+  // const handleDemographic = () => {
+  //   setState(prev => ({
+  //     ...prev,
+  //     showDemographic: !prev.showDemographic,
+  //   }));
+  // };
 
-  const addDemographic = value => {
-    setState(prev => ({
-      ...prev,
-      demographic: value,
-    }));
-  };
+  // const addDemographic = value => {
+  //   setState(prev => ({
+  //     ...prev,
+  //     demographic: value,
+  //   }));
+  // };
+
+  function onChangeDate(value, dateString) {
+    console.log('select date', value);
+    console.log('string info', dateString);
+  }
 
   return (
     <Form
@@ -105,23 +105,10 @@ export default function BarGraph() {
         remember: true,
       }}
     >
-      <Plot data={barData.data} layout={barLayout.layout} />
+      {/* <Plot data={barData} layout={barLayout} /> */}
 
       {/* Start date and End Date */}
-      <RangePicker
-        defaultValue={[moment(state.start_date), moment(state.end_date)]}
-        onChange={date => {
-          if (date.length === 2) {
-            const start_date = moment(date[0]).format('yyyy-M-D');
-            const end_date = moment(date[1]).format('yyyy-M-D');
-            setState({
-              start_date,
-              end_date,
-            });
-          }
-        }}
-        name="date"
-      />
+      <RangePicker onChange={onChangeDate} format="YYYY-MM-DD" name="date" />
 
       {/*  Ascending true or false */}
       {/*  Title: Order By */}
@@ -129,7 +116,7 @@ export default function BarGraph() {
 
       <Radio.Group
         options={ascOptions}
-        onChange={onChange}
+        // onChange={onChange}
         name="asc"
         optionType="button"
         buttonStyle="solid"
@@ -143,20 +130,34 @@ export default function BarGraph() {
       */}
       <Radio.Group
         options={focusOn}
-        onChange={onChange}
         name="group_by"
         optionType="button"
         buttonStyle="solid"
       />
       {/* Title: Focus on   */}
 
-      <Input placeholder=" Select State" />
+      <Select
+        showSearch
+        style={{ width: 500 }}
+        placeholder=" Select State"
+        optionFilterProp="children"
+        filterOption={(input, option) =>
+          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+      >
+        {states.map(function(a_state) {
+          return (
+            <Option value={a_state.value} key={a_state.value}>
+              {a_state.label}
+            </Option>
+          );
+        })}
+      </Select>
       <Input placeholder="City" />
       <Input placeholder="Zipcode" />
 
       {/*  Submit and the reset buttons */}
       <Button
-        // onClick={onFinish}
         style={{ marginTop: '20px' }}
         type="primary"
         shape="round"
@@ -164,13 +165,7 @@ export default function BarGraph() {
       >
         Submit
       </Button>
-      <Button
-        type="primary"
-        shape="round"
-        size="small"
-        style={{ margin: 0 }}
-        onClick={() => setState(defaultFilterState)}
-      >
+      <Button type="primary" shape="round" size="small" style={{ margin: 0 }}>
         Reset Filters
       </Button>
     </Form>
