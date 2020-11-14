@@ -7,6 +7,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import { Button, Layout } from 'antd';
+// import Filter_forms from './components/Filter_forms';
 
 // reducers
 import rootReducer from './reducers/combinedReducer';
@@ -16,6 +18,7 @@ import rootReducer from './reducers/combinedReducer';
 import Header from './components/Header';
 import Loading from './components/Loading';
 import Visualization from './components/Visualization';
+import form_reducers from './state/reducers/graph_reducers';
 
 //CSS styles
 import 'antd/dist/antd.less';

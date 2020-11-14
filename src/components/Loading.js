@@ -30,24 +30,8 @@ const Loading = () => {
           type="card"
           size="large"
           tabBarExtraContent={openFilters}
-        >
-          {/* <TabPane tab="Map" key="1">
-            <div id="map" style={{ display: 'block' }}>
-              {<Map />}
-            </div>
-          </TabPane>
-          <TabPane tab="Graph" key="2" style={{ backgroundColor: '#191a1a' }}>
-            <div id="graph">{<Graph />}</div>
-          </TabPane>
-          <TabPane tab="About" key="3">
-            <div id="about">{<About />}</div>
-          </TabPane> */}
-        </Tabs>
+        ></Tabs>
       </main>
-      <footer className="page-footer">
-        <small>© Copyright 2020. All rights reserved.</small>
-        <ul></ul>
-      </footer>
     </div>
   );
 };

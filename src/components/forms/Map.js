@@ -113,9 +113,7 @@ export default function Map() {
             <Option value="Unknown Race">Unknown Race</Option>
           </Select>
         </div>
-        <Button type="primary" shape="round" size="large">
-          Add More
-        </Button>
+
         <div style={{ textAlign: 'left', padding: '10px', margin: '10px' }}>
           <Button
             style={{ margin: '2px' }}
