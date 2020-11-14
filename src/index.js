@@ -6,9 +6,9 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import { Button, Layout } from 'antd';
 // import Filter_forms from './components/Filter_forms';
-import logger from 'redux-logger';
 
 // reducers
 import rootReducer from './reducers/combinedReducer';
