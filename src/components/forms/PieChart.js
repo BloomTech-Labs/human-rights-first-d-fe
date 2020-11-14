@@ -28,28 +28,28 @@ export default function PieChart() {
   //helper functions
   // use the form inputs to make a call to the backend
   //save resp into the global props
-  const onFinish = async values => {
-    // GET Plotly data from the backend server
-    let pie_chart = await axios.post(
-      'https://hrf-d-api.herokuapp.com/ds_server/us_map',
-      {
-        user_input: values.select_state,
-      }
-    );
+  // const onFinish = async values => {
+  //   // GET Plotly data from the backend server
+  //   let pie_chart = await axios.post(
+  //     'https://hrf-d-api.herokuapp.com/ds_server/us_demo_pie',
+  //     {
+  //       user_input: values.select_state,
+  //     }
+  //   );
 
-    //onwrap pie_chart resp data and parse the json into js
-    pie_chart = JSON.parse(pie_chart.data.unemployment_rate);
+  //   //onwrap pie_chart resp data and parse the json into js
+  //   pie_chart = JSON.parse(pie_chart.data);
 
-    // save data on global props
-    dispatch({ type: ADD_PIE_CHART, payload: pie_chart });
-  };
+  //   // save data on global props
+  //   dispatch({ type: ADD_PIE_CHART, payload: pie_chart });
+  // };
 
   return (
     <Form
       {...layout}
       name="basic"
       initialValues={{ remember: true }}
-      onFinish={onFinish}
+      // onFinish={onFinish}
     >
       <Form.Item
         name="select_state"
