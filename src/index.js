@@ -3,21 +3,30 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // redux hooks
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import form_reducer from './reducers/graph_reducer';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+import { Button, Layout } from 'antd';
+// import Filter_forms from './components/Filter_forms';
+
+// reducers
+import rootReducer from './reducers/combinedReducer';
+// import form_reducer from './reducers/graph_reducer';
 
 //components
 import Header from './components/Header';
 import Loading from './components/Loading';
 import Visualization from './components/Visualization';
+import form_reducers from './state/reducers/graph_reducers';
 
 //CSS styles
 import 'antd/dist/antd.less';
 import './styles/normalize.css';
+import { mapReducer } from './reducers/map_reducer';
 
 // apply redux hooks to react
-const store = createStore(form_reducer);
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>

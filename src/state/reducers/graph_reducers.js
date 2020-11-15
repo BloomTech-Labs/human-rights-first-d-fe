@@ -1,39 +1,36 @@
 // actions
-export const ADD_BAR_GRAPH = 'ADD_BAR_GRAPH';
+
+export const ADD_BAR_GRAPH = 'ADD_ BAR_GRAPH';
 export const ADD_MAP = 'ADD_MAP';
-export const ADD_PIE_CHART = 'ADD_PIE_CHART';
+export const ADD_PIE_CHART = 'ADD_ PIE_CHART';
 export const SELECT_STATE = 'SELECT_STATE';
 
-// initial states
+// initialState
 export const initialState = {
   bar_graph: {
     data: [],
-    layout: {},
+    layout: [],
   },
   map: {
     data: [],
-    layout: {},
+    layout: [],
   },
   pie_chart: {
     data: [],
-    layout: {},
+    layout: [],
   },
   select_state: '',
 };
-
 // reducer
-export function Graph_reducer(state = initialState, action) {
+
+export default function graph_reducer(state = initialState, action) {
   switch (action.type) {
     case SELECT_STATE:
       return {
         ...state,
         select_state: action.payload,
       };
-    case ADD_BAR_GRAPH:
-      return {
-        ...state,
-        bar_graph: action.payload,
-      };
+
     case ADD_MAP:
       return {
         ...state,

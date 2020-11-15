@@ -1,24 +1,19 @@
 //libraries
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Plot from 'react-plotly.js';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-
-const initialState = {
-  data: [],
-  layout: {},
-  frames: [],
-  config: {
-    displaylogo: false,
-    displayModeBar: false,
-  },
-};
-
+import { useSelector, useDispatch } from 'react-redux';
+import { mapSelection } from '../state/actions/mapActions';
+import { barSelection } from '../state/actions/barActions';
+import { pieSelection } from '../state/actions/pieActions';
 export default function Visualization() {
   //states
-  const props = useSelector(state => state);
-  console.log(props);
-  const [data, setData] = useState(initialState);
+  const mapData = useSelector(state => state.map.data);
+  const mapLayout = useSelector(state => state.map.layout);
+  const barData = useSelector(state => state.bar.data);
+  const barLayout = useSelector(state => state.bar.layout);
+  const pieData = useSelector(state => state.pie.data);
+  const pieLayout = useSelector(state => state.pie.layout);
+
 
   //default reder to map
   useEffect(() => {
@@ -32,11 +27,26 @@ export default function Visualization() {
     fetchDSData();
   }, []);
 
-  // if one of the gloval pros for a chart changes, render that prop
+
   useEffect(() => {
-    setData(props.pie_chart);
-  }, [props.pie_chart]);
+    dispatch(barSelection());
+    dispatch(mapSelection());
+    dispatch(pieSelection());
+    // console.log('map select', mapData);
+  }, []);
 
   //Todo: make map full width and height
-  return <Plot data={data.data} layout={data.layout} />;
+  return (
+    <div>
+      <Plot data={mapData} layout={mapLayout} />
+      <Plot data={barData} layout={barLayout} />
+      <Plot data={pieData} layout={pieLayout} />
+
+      <footer className="page-footer">
+        <h1 style={{ fontSize: '15px' }}>
+          © Copyright 2020. All rights reserved.
+        </h1>
+      </footer>
+    </div>
+  );
 }

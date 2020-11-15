@@ -1,228 +1,215 @@
-import React from 'react';
-import { Radio, Button, Card } from 'antd';
-import { DatePicker, Space, Input } from 'antd';
-// import './globalstyle.css';
+import React, { useEffect } from 'react';
+import { Radio, DatePicker, Button, Form, Input, Select } from 'antd';
+import moment from 'moment';
 
-const options = [
-  { label: 'Map', value: 'Map' },
-  { label: 'Bar', value: 'Bar' },
-  { label: 'Pie Chart ', value: 'Pie Chart' },
-  { label: 'Other Chart', value: 'Other Chart' },
-];
-const incidents = ['Most Incident', 'Least Incident'];
+import { barSelection } from '../../state/actions/barActions';
+
+import { useSelector, useDispatch } from 'react-redux';
+import states from '../../helpers/states';
+
 const { RangePicker } = DatePicker;
 
-const states = [
-  { label: 'AL', value: 'AL' },
-  { label: 'AK', value: 'AK' },
-  { label: 'AZ', value: 'AZ' },
-  { label: 'AR', value: 'AR' },
-  { label: 'CA', value: 'CA' },
-  { label: 'CO', value: 'CO' },
-  { label: 'CT', value: 'CT' },
-  { label: 'DE', value: 'DE' },
-  { label: 'DC', value: 'DC' },
-  { label: 'FL', value: 'FL' },
-  { label: 'GA', value: 'GA' },
-  { label: 'HI', value: 'HI' },
-  { label: 'ID', value: 'ID' },
-  { label: 'IL', value: 'IL' },
-  { label: 'IN', value: 'IN' },
-  { label: 'IA', value: 'IA' },
-  { label: 'KS', value: 'KS' },
-  { label: 'KY', value: 'KY' },
-  { label: 'LA', value: 'LA' },
-  { label: 'ME', value: 'ME' },
-  { label: 'MD', value: 'MD' },
-  { label: 'MA', value: 'MA' },
-  { label: 'MI', value: 'MI' },
-  { label: 'MN', value: 'MN' },
-  { label: 'MS', value: 'MS' },
-  { label: 'MO', value: 'MO' },
-  { label: 'MT', value: 'MT' },
-  { label: 'NE', value: 'NE' },
-  { label: 'NV', value: 'NV' },
-  { label: 'NH', value: 'NH' },
-  { label: 'NJ', value: 'NJ' },
-  { label: 'NM', value: 'NM' },
-  { label: 'NY', value: 'NY' },
-  { label: 'NC', value: 'NC' },
-  { label: 'ND', value: 'ND' },
-  { label: 'OH', value: 'OH' },
-  { label: 'OK', value: 'OK' },
-  { label: 'OR', value: 'OR' },
-  { label: 'PA', value: 'PA' },
-  { label: 'RI', value: 'RI' },
-  { label: 'SC', value: 'SC' },
-  { label: 'SD', value: 'SD' },
-  { label: 'TN', value: 'TN' },
-  { label: 'TX', value: 'TX' },
-  { label: 'UT', value: 'UT' },
-  { label: 'VT', value: 'VT' },
-  { label: 'VA', value: 'VA' },
-  { label: 'WA', value: 'WA' },
-  { label: 'WV', value: 'WV' },
-  { label: 'WI', value: 'WI' },
-  { label: 'WY', value: 'WY' },
+const { Option } = Select;
+
+const ascOptions = [
+  {
+    label: 'Most Reports',
+    value: true,
+  },
+  {
+    label: 'Least Reports',
+    value: false,
+  },
+];
+const focusOn = [
+  {
+    label: 'State',
+    value: true,
+  },
+  {
+    label: 'National',
+    value: true,
+  },
+  {
+    label: 'Zipcode',
+    value: true,
+  },
+  {
+    label: 'City',
+    value: true,
+  },
 ];
 
-const defaultFilterState = {
-  mapValue: 'Map',
-  incidentValue: 'Most Incident',
-  stateValue: '',
-  city: '',
-  zipcode: '',
-  showDemographic: false,
-  demographic: ['other'],
-  start_date: '2013-01-01',
-  end_date: '2019-01-01',
-  start_year: '2020',
-  end_year: '2020',
-};
+export default function BarGraph() {
+  //react hooks
+  const dispatch = useDispatch();
+  // const [state, setState] = useState(initialState);
 
-class BarGraph extends React.Component {
-  state = {
-    ...defaultFilterState,
+  const barData = useSelector(state => state.bar.data);
+  const barLayout = useSelector(state => state.bar.layout);
+
+  // helper functions
+  useEffect(() => {
+    dispatch(barSelection());
+  }, []);
+
+  // FORM ACTIONS
+
+  const layout = {
+    labelCol: {
+      span: 8,
+    },
+    wrapperCol: {
+      span: 16,
+    },
   };
 
-  onChange = e => {
-    console.log('radio checked', e.target.value);
-    this.setState({
-      value: e.target.value,
-    });
-  };
+  // const onChange = event => {
+  //   setState({
+  //     ...state,
+  //     [event.target.name]: event.target.value,
+  //   });
+  //   console.log(state);
+  // };
+  // const onRadioChange = e => {
+  //   console.log('radio checked', e.target.value);
+  //   const { name, value } = e.target;
+  //   setState({
+  //     [name]: value,
+  //   });
+  // };
+  // const handleDemographic = () => {
+  //   setState(prev => ({
+  //     ...prev,
+  //     showDemographic: !prev.showDemographic,
+  //   }));
+  // };
 
-  render() {
-    const { value } = this.state;
-    return (
-      <div className="main">
-        <Card title="" style={{ width: 500 }}>
-          <div className="search-result">
-            <h2>Filter Your Results</h2>
-          </div>
-          {/* <div className="visual-style">
-            <h3>Select Visual Style</h3>
-          </div> */}
-          <div className="radio-buttons">
-            <div className="map-style">
-              <Radio.Group
-                size="large"
-                options={options}
-                onChange={this.onChange}
-                value={value}
-                optionType="button"
-                buttonStyle="solid"
-              />
-            </div>
-            <div className="incidents">
-              <Radio.Group
-                size="large"
-                options={incidents}
-                onChange={this.onChange}
-                value={value}
-                optionType="button"
-                buttonStyle="solid"
-              />
-            </div>
-          </div>
-          <div className="dates">
-            <div>
-              <Space direction="horizontal" size={12}>
-                <RangePicker size="large" />
-                <RangePicker size="large" picker="year" />
-              </Space>
-            </div>
-          </div>
-          <div className="input-form">
-            <Input size="large" placeholder=" Select State" />
-            <Input placeholder="City" />
-            <Input placeholder="Zipcode" />
-          </div>
-          <Button type="primary" shape="round" size="large">
-            Add More
-          </Button>
-          <div style={{ textAlign: 'left', padding: '10px', margin: '10px' }}>
-            <Button
-              style={{ margin: '2px' }}
-              type="primary"
-              shape="round"
-              size="large"
-            >
-              Submit
-            </Button>
-            <Button type="primary" shape="round" size="large">
-              Reset Filters
-            </Button>
-          </div>
-        </Card>
+  // const addDemographic = value => {
+  //   setState(prev => ({
+  //     ...prev,
+  //     demographic: value,
+  //   }));
+  // };
 
-        <div className="main-heading">
-          <h1>Police Shooting Between 2013 and 2020</h1>
-        </div>
-        <div className="search-result">
-          <h2>Filter Your Results</h2>
-        </div>
-        <div className="visual-style">
-          <h3>Select Visual Style</h3>
-        </div>
-        <div className="radio-buttons">
-          <div className="map-style">
-            <Radio.Group
-              size="large"
-              options={options}
-              onChange={this.onChange}
-              value={value}
-              optionType="button"
-              buttonStyle="solid"
-            />
-          </div>
-
-          <div className="incidents">
-            <Radio.Group
-              size="large"
-              options={incidents}
-              onChange={this.onChange}
-              value={value}
-              optionType="button"
-              buttonStyle="solid"
-            />
-          </div>
-        </div>
-        <div className="dates">
-          <div>
-            <Space direction="horizontal" size={12}>
-              <RangePicker size="large" />
-
-              <RangePicker size="large" picker="year" />
-            </Space>
-          </div>
-        </div>
-
-        <div className="input-form">
-          <Input size="large" placeholder=" Select State" />
-          <Input placeholder="City" />
-          <Input placeholder="Zipcode" />
-        </div>
-        <Button type="primary" shape="round" size="large">
-          Add More
-        </Button>
-
-        <div style={{ textAlign: 'left', padding: '10px', margin: '10px' }}>
-          <Button
-            style={{ margin: '2px' }}
-            type="primary"
-            shape="round"
-            size="large"
-          >
-            Submit
-          </Button>
-          <Button type="primary" shape="round" size="large">
-            Reset Filters
-          </Button>
-        </div>
-      </div>
-    );
+  function onChangeDate(value, dateString) {
+    console.log('select date', value);
+    console.log('string info', dateString);
   }
+
+  return (
+    <Form
+      {...layout}
+      name="basic"
+      initialValues={{
+        remember: true,
+      }}
+    >
+      {/* <Plot data={barData} layout={barLayout} /> */}
+
+      {/* Start date and End Date */}
+      <RangePicker onChange={onChangeDate} format="YYYY-MM-DD" name="date" />
+
+      {/*  Ascending true or false */}
+      {/*  Title: Order By */}
+      {/*  Most reports and Least reports  */}
+
+      <Radio.Group
+        options={ascOptions}
+        // onChange={onChange}
+        name="asc"
+        optionType="button"
+        buttonStyle="solid"
+      />
+
+      {/* Group By
+        - state
+        - national
+        - zipcode
+        - city
+      */}
+      <Radio.Group
+        options={focusOn}
+        name="group_by"
+        optionType="button"
+        buttonStyle="solid"
+      />
+      {/* Title: Focus on   */}
+
+      <Select
+        showSearch
+        style={{ width: 500 }}
+        placeholder=" Select State"
+        optionFilterProp="children"
+        filterOption={(input, option) =>
+          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+      >
+        {states.map(function(a_state) {
+          return (
+            <Option value={a_state.value} key={a_state.value}>
+              {a_state.label}
+            </Option>
+          );
+        })}
+      </Select>
+      <Input placeholder="City" />
+      <Input placeholder="Zipcode" />
+
+      {/*  Submit and the reset buttons */}
+      <Button
+        style={{ marginTop: '20px' }}
+        type="primary"
+        shape="round"
+        size="small"
+      >
+        Submit
+      </Button>
+      <Button type="primary" shape="round" size="small" style={{ margin: 0 }}>
+        Reset Filters
+      </Button>
+    </Form>
+  );
 }
 
-export default BarGraph;
+// const Demographic = ({
+//   showDemographic,
+//   setState,
+//   demographic,
+//   addDemographic,
+// }) => {
+//   return (
+//     <div style={{ paddingLeft: 0, marginBottom: 20, marginTop: 20 }}>
+//       <div style={{ marginBottom: 10 }}>
+//         <Checkbox onChange={setState}>Demographic</Checkbox>
+//       </div>
+//       {showDemographic && (
+//         <Select
+//           mode="multiple"
+//           style={{ width: '100%' }}
+//           placeholder="select one"
+//           defaultValue={demographic}
+//           onChange={addDemographic}
+//           optionLabelProp="label"
+//         >
+//           <Select.Option value="black" label="Black">
+//             <div className="demo-option-label-item">Black</div>
+//           </Select.Option>
+//           <Select.Option value="white" label="White">
+//             <div className="demo-option-label-item">White</div>
+//           </Select.Option>
+//           <Select.Option value="asian" label="Asian">
+//             <div className="demo-option-label-item">Asian</div>
+//           </Select.Option>
+//           <Select.Option value="pacific islander" label="Pacific Islander">
+//             <div className="demo-option-label-item">Pacific Islander</div>
+//           </Select.Option>
+
+//           <Select.Option value="other" label="Other">
+//             <div className="demo-option-label-item">Other</div>
+//           </Select.Option>
+//         </Select>
+//       )}
+//     </div>
+//   );
+// }

@@ -3,8 +3,10 @@
 import { combineReducers } from 'redux';
 import fetchIncidentsReducer from './fetchIncidentsReducer';
 import filters from './filtersReducer';
+import { mapReducer as map } from './mapReducer';
 
 export default combineReducers({
   fetchIncidentsReducer,
   filters,
+  map,
 });
