@@ -9,6 +9,7 @@
   padding: 2%;
   background-color: #f4ebe1;
   height: 80vh;
+  /* width: 90vw; */
 }
 
 .about-title {
@@ -19,7 +20,7 @@
   max-width: 900px;
   text-align: center;
   margin: 0 auto;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .about-feature {
@@ -48,4 +49,6 @@
 
 .hrf img {
   padding-bottom: 1.5%;
+  width: 30%;
 }
+
