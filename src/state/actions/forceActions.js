@@ -4,9 +4,7 @@ import axios from 'axios';
 export const forceSelection = () => dispatch => {
   axios
 
-    .get(
-      'http://hrf-ds16.eba-fmbjvhg4.us-east-1.elasticbeanstalk.com/us_non_lethal'
-    )
+    .get('https://hrf-d-api.herokuapp.com/ds_server/us_non_lethal')
     .then(res => {
       console.log('forcedata', res.data);
       const force = JSON.parse(res.data);
