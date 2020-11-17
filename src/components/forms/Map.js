@@ -1,16 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  DatePicker,
-  Space,
-  Input,
-  Button,
-  Card,
-  Menu,
-  message,
-  Select,
-} from 'antd';
-import Plot from 'react-plotly.js';
+import { DatePicker, Space, Button, Card, message, Select } from 'antd';
 import states from '../../helpers/states';
 
 import { mapSelection } from '../../state/actions/mapActions';
@@ -18,7 +8,6 @@ import { mapSelection } from '../../state/actions/mapActions';
 // helpers
 const { Option } = Select;
 
-const options = [{ label: 'Map', value: 'Map' }];
 const { RangePicker } = DatePicker;
 
 // Button onChange info
@@ -31,7 +20,7 @@ function handleMenuClick(e) {
 export default function Map() {
   const dispatch = useDispatch();
   const mapData = useSelector(state => state.map.data);
-  const mapLayout = useSelector(state => state.map.layout);
+  // const mapLayout = useSelector(state => state.map.layout);
 
   // helper function
   useEffect(() => {
