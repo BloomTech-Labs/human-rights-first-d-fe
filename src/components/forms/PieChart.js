@@ -37,8 +37,10 @@ export default function PieChart() {
   //     }
   //   );
 
-  //   //onwrap pie_chart resp data and parse the json into js
-  //   pie_chart = JSON.parse(pie_chart.data);
+
+    //onwrap pie_chart resp data and parse the json into js
+    pie_chart = JSON.parse(pie_chart.data);
+
 
   //   // save data on global props
   //   dispatch({ type: ADD_PIE_CHART, payload: pie_chart });
