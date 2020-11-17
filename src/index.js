@@ -1,6 +1,7 @@
 //libraries
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 // redux hooks
 import { createStore, applyMiddleware } from 'redux';
@@ -18,8 +19,7 @@ import rootReducer from './reducers/combinedReducer';
 import Header from './components/Header';
 import Loading from './components/Loading';
 import Visualization from './components/Visualization';
-import form_reducers from './state/reducers/graph_reducers';
-
+import About from './components/not_use/common/About';
 //CSS styles
 import 'antd/dist/antd.less';
 import './styles/normalize.css';
@@ -42,7 +42,15 @@ function App() {
     <>
       <Header />
       <Loading />
-      <Visualization />
+      {/* <Visualization /> */}
+
+      <Router>
+        <Switch>
+          <Route exact path="/about">
+            <About />
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }

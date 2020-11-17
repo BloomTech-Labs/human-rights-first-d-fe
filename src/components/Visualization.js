@@ -5,6 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { mapSelection } from '../state/actions/mapActions';
 import { barSelection } from '../state/actions/barActions';
 import { pieSelection } from '../state/actions/pieActions';
+import { forceSelection } from '../state/actions/forceActions';
+import { incidentSelection } from '../state/actions/incidentsActions';
+import { demoSelection } from '../state/actions/demoActions';
+
 export default function Visualization() {
   //states
   const mapData = useSelector(state => state.map.data);
@@ -13,6 +17,12 @@ export default function Visualization() {
   const barLayout = useSelector(state => state.bar.layout);
   const pieData = useSelector(state => state.pie.data);
   const pieLayout = useSelector(state => state.pie.layout);
+  const forceData = useSelector(state => state.force.data);
+  const forceLayout = useSelector(state => state.force.layout);
+  const incidentData = useSelector(state => state.incident.data);
+  const incidentLayout = useSelector(state => state.incident.layout);
+  const demoLayout = useSelector(state => state.demo.layout);
+  const demoData = useSelector(state => state.demo.data);
 
   const dispatch = useDispatch();
 
@@ -20,6 +30,10 @@ export default function Visualization() {
     dispatch(barSelection());
     dispatch(mapSelection());
     dispatch(pieSelection());
+    dispatch(forceSelection());
+    dispatch(incidentSelection());
+    dispatch(demoSelection());
+
     // console.log('map select', mapData);
   }, []);
 
@@ -29,12 +43,9 @@ export default function Visualization() {
       <Plot data={mapData} layout={mapLayout} />
       <Plot data={barData} layout={barLayout} />
       <Plot data={pieData} layout={pieLayout} />
-
-      <footer className="page-footer">
-        <h1 style={{ fontSize: '15px' }}>
-          © Copyright 2020. All rights reserved.
-        </h1>
-      </footer>
+      <Plot data={forceData} layout={forceLayout} />
+      <Plot data={incidentData} layout={incidentLayout} />
+      <Plot data={demoData} layout={demoLayout} />
     </div>
   );
 }

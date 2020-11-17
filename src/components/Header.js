@@ -12,6 +12,7 @@ const Header = () => {
         />
         <h2 style={{ margin: 0 }}>Human Rights First</h2>
       </div>
+      <div></div>
     </div>
   );
 };

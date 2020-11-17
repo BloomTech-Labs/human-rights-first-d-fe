@@ -21,24 +21,24 @@ const ascOptions = [
     value: false,
   },
 ];
-const focusOn = [
-  {
-    label: 'State',
-    value: true,
-  },
-  {
-    label: 'National',
-    value: true,
-  },
-  {
-    label: 'Zipcode',
-    value: true,
-  },
-  {
-    label: 'City',
-    value: true,
-  },
-];
+// const focusOn = [
+//   {
+//     label: 'State',
+//     value: true,
+//   },
+//   {
+//     label: 'National',
+//     value: true,
+//   },
+//   {
+//     label: 'Zipcode',
+//     value: true,
+//   },
+//   {
+//     label: 'City',
+//     value: true,
+//   },
+// ];
 
 export default function BarGraph() {
   //react hooks
@@ -128,12 +128,12 @@ export default function BarGraph() {
         - zipcode
         - city
       */}
-      <Radio.Group
+      {/* <Radio.Group
         options={focusOn}
         name="group_by"
         optionType="button"
         buttonStyle="solid"
-      />
+      /> */}
       {/* Title: Focus on   */}
 
       <Select
@@ -171,45 +171,3 @@ export default function BarGraph() {
     </Form>
   );
 }
-
-// const Demographic = ({
-//   showDemographic,
-//   setState,
-//   demographic,
-//   addDemographic,
-// }) => {
-//   return (
-//     <div style={{ paddingLeft: 0, marginBottom: 20, marginTop: 20 }}>
-//       <div style={{ marginBottom: 10 }}>
-//         <Checkbox onChange={setState}>Demographic</Checkbox>
-//       </div>
-//       {showDemographic && (
-//         <Select
-//           mode="multiple"
-//           style={{ width: '100%' }}
-//           placeholder="select one"
-//           defaultValue={demographic}
-//           onChange={addDemographic}
-//           optionLabelProp="label"
-//         >
-//           <Select.Option value="black" label="Black">
-//             <div className="demo-option-label-item">Black</div>
-//           </Select.Option>
-//           <Select.Option value="white" label="White">
-//             <div className="demo-option-label-item">White</div>
-//           </Select.Option>
-//           <Select.Option value="asian" label="Asian">
-//             <div className="demo-option-label-item">Asian</div>
-//           </Select.Option>
-//           <Select.Option value="pacific islander" label="Pacific Islander">
-//             <div className="demo-option-label-item">Pacific Islander</div>
-//           </Select.Option>
-
-//           <Select.Option value="other" label="Other">
-//             <div className="demo-option-label-item">Other</div>
-//           </Select.Option>
-//         </Select>
-//       )}
-//     </div>
-//   );
-// }

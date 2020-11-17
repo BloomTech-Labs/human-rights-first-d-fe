@@ -40,8 +40,6 @@ export default function Map() {
 
   return (
     <div className="main">
-      <Plot data={mapData} layout={mapLayout} />
-
       <Card title="" style={{ width: 500 }}>
         <div className="dates">
           <div>
