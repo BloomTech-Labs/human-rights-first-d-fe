@@ -56,30 +56,33 @@ const Loading = () => {
     console.log(key);
   }
 
+  const operations = (
+    <Popover
+      placement="bottomRight"
+      title={<span></span>}
+      content={<Map />}
+      trigger="click"
+    >
+      <Button type="link">Incident Filters</Button>
+    </Popover>
+  );
+
   return (
     <div>
       <main>
-        <Tabs onChange={callback} type="card">
+        <Tabs onChange={callback} type="card" tabBarExtraContent={operations}>
           <TabPane tab="Police Use of Force" key="1">
-            <Popover
+            <Button
               placement="right"
               title={<span></span>}
               content={<Map />}
               trigger="click"
-            ></Popover>
+            ></Button>
             <Plot data={forceData} layout={forceLayout} />
             <Plot data={incidentData} layout={incidentLayout} />
           </TabPane>
 
           <TabPane tab="Incidents of Killing" key="2">
-            <Popover
-              placement="right"
-              title={<span></span>}
-              content={<Map />}
-              trigger="click"
-            >
-              {/* <Button type="link">Open Filters</Button> */}
-            </Popover>
             <Plot data={mapData} layout={mapLayout} />
             <Plot data={barData} layout={barLayout} />
             <Plot data={pieData} layout={pieLayout} />
