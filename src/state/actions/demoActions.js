@@ -1,4 +1,4 @@
-import { ADD_DEMO_DATA, ADD_DEMO_LAYOUT } from '../../reducers/demo_reducers';
+import { ADD_DEMO_DATA, ADD_DEMO_LAYOUT } from '../reducers/demo_reducers';
 import axios from 'axios';
 
 export const demoSelection = () => dispatch => {

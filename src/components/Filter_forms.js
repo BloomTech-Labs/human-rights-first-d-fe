@@ -1,6 +1,6 @@
 // imports
 import React from 'react';
-import { Tabs, Radio, Space } from 'antd';
+import { Tabs } from 'antd';
 import Map from './forms/Map';
 import BarGraph from './forms/BarGraph';
 import PieChart from './forms/PieChart';

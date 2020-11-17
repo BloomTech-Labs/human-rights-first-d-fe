@@ -1,7 +1,7 @@
 // actions
 export const ADD_MAP_DATA = 'ADD_MAP_DATA';
 export const ADD_MAP_LAYOUT = 'ADD_MAP_LAYOUT';
-export const ADD_GENDER = 'ADD_GENDER';
+export const FIND_START_DATE = 'FIND_START_DATE';
 export const ADD_ARMED = 'ADD_ARMED';
 export const ADD_DEMOGRAPHIC = 'ADD_DEMOGRAPHIC';
 
@@ -30,10 +30,11 @@ export function mapReducer(state = initialState, action) {
         ...state,
         layout: action.payload,
       };
-    case 'ADD_GENDER':
+    case 'FIND_START_DATE':
       return {
-        ...state,
-        gender: action.payload,
+        ...state.map(startDate => {
+          return startDate == action.payload;
+        }),
       };
     case 'ADD_ARMED':
       return {

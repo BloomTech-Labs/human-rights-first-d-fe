@@ -15,7 +15,7 @@ export const initialState = {
 };
 
 // reducers
-export default function barReducer(state = initialState, action) {
+export function barReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_BAR_DATA:
       return {

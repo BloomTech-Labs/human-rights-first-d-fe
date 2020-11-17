@@ -12,7 +12,7 @@ import { Button, Layout } from 'antd';
 // import Filter_forms from './components/Filter_forms';
 
 // reducers
-import rootReducer from './reducers/combinedReducer';
+import rootReducer from './state/reducers/combinedReducer';
 // import form_reducer from './reducers/graph_reducer';
 
 //components
@@ -23,7 +23,6 @@ import About from './components/not_use/common/About';
 //CSS styles
 import 'antd/dist/antd.less';
 import './styles/normalize.css';
-import { mapReducer } from './reducers/map_reducer';
 
 // apply redux hooks to react
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
