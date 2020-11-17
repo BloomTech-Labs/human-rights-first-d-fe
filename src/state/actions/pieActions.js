@@ -1,4 +1,4 @@
-import { ADD_PIE_DATA, ADD_PIE_LAYOUT } from '../../reducers/pie_reducers';
+import { ADD_PIE_DATA, ADD_PIE_LAYOUT } from '../reducers/pie_reducers';
 import axios from 'axios';
 
 export const pieSelection = () => dispatch => {

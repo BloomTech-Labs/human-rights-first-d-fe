@@ -1,7 +1,4 @@
-import {
-  ADD_FORCE_DATA,
-  ADD_FORCE_LAYOUT,
-} from '../../reducers/force_reducers';
+import { ADD_FORCE_DATA, ADD_FORCE_LAYOUT } from '../reducers/force_reducers';
 import axios from 'axios';
 
 export const forceSelection = () => dispatch => {

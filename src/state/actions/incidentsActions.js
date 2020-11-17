@@ -1,7 +1,7 @@
 import {
   ADD_INCIDENT_DATA,
   ADD_INCIDENT_LAYOUT,
-} from '../../reducers/incident_reducers';
+} from '../reducers/incident_reducers';
 import axios from 'axios';
 
 export const incidentSelection = () => dispatch => {
