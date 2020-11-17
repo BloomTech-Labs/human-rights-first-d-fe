@@ -6,7 +6,7 @@ import axios from 'axios';
 
 // helpers
 import states from '../../helpers/states';
-import { ADD_PIE_CHART } from '../../reducers/graph_reducer';
+import { ADD_PIE_CHART } from '../../state/reducers/pie_reducers';
 
 const { Option } = Select;
 

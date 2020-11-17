@@ -1,4 +1,4 @@
-import { ADD_BAR_DATA, ADD_BAR_LAYOUT } from '../../reducers/barReducer';
+import { ADD_BAR_DATA, ADD_BAR_LAYOUT } from '../reducers/barReducer';
 import axios from 'axios';
 
 export const barSelection = () => dispatch => {
