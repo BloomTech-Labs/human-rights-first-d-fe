@@ -34,37 +34,10 @@ export default function Map() {
           <div>
             <Space direction="horizontal" size={12}>
               <RangePicker size="large" />
-              <RangePicker size="large" picker="year" />
             </Space>
           </div>
         </div>
         <div className="input-form">
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            placeholder="Select a gender"
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            <Option value="Male">Male</Option>
-            <Option value="Female">Female</Option>
-            <Option value="Undetermined">Undetermined</Option>
-          </Select>
-
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            placeholder="Select if armed"
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            <Option value="Armed">Armed</Option>
-            <Option value="Unarmed">Unarmed</Option>
-          </Select>
           <Select
             showSearch
             style={{ width: 200 }}
