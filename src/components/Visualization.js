@@ -45,8 +45,6 @@ export default function Visualization() {
     dispatch(forceSelection());
     dispatch(incidentSelection());
     dispatch(demoSelection());
-
-    // console.log('map select', mapData);
   }, []);
 
   //Todo: make map full width and height
