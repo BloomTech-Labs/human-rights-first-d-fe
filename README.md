@@ -1,102 +1,123 @@
-# Human Rights First Police Use of Force Map - Front End
+# Human Rights First D DS
 
-## Description 👇
-> **Disclaimer:** This application is currently in Alpha (as of Oct 20, 2020) and is not ready for production. Please use at your own risk as things will change almost daily.
+## Description
+We were approached to undertake this project by Human Rights First, a non-profit, nonpartisan organization dedicated to fighting for human rights and race equality. They have been working diligently for over 40 years, with a strong presence across the country, from Washington D.C. and Los Angeles. They have been on the forefront of this struggle for a long time, and they are very good at what they do.
+The purpose of this app is to better track and report acts of police use of force. There are wild inconsistencies regarding how these acts are reported, and the information is thin no matter where you look. Using various APIs and datasets, we pooled and shaped these sources and rendered them onto an easily navigated map of the US as well as multiple graphs pointing out discrepancies. Each datapoint on the map is clickable and will give the metrics for what it represents. The goal was to have a single source of truth on this matter.
+Moving forward, the app could benefit from more social media API data, and possibly an NLP model to assess this data to find relevant incidents.
 
-- Our team is developing an interactive map that identifies potential instances of police use of force across the United States of America for [Human Rights First](https://www.humanrightsfirst.org/), an independent advocacy and action organization. We are also developing additional graphics to track and display police brutality trends.
-- An application that takes information from data provided by the data science team collecting relevant incidents and data from Twitter, Reddit, and police agencies to display it on the map.
-- This app will display various incidents of police use of force on a map that can be filtered by  type of brutality and location with zipcodes and states.
+If we do a video, we should add it here.
 
-## Deployed App
-- https://d.humanrightsfirst.dev/
-<img src='./src/assets/hrf.jpg'>
+## Contributors
 
-## Features
+| [Rob Bennett](https://github.com/RobDBennett) | [Sasana Kongjareon](https://github.com/popkdodge) | [Royer Adames](https://github.com/royeradames) | [Bikesh Maharjan](https://github.com/bikesh-maharjan) | [Heath Scott](https://github.com/Scotth72) |
+| :---: | :---: | :---: | :---: | :---: |
+| [<img src="https://avatars1.githubusercontent.com/u/64490045?s=460&u=85f903c0baf6ae8fcab0ae2d1686a434ce90be6b&v=4" width = "200" />](https://github.com/RobDBennett) | [<img src="https://avatars1.githubusercontent.com/u/62583069?s=460&u=2ce19efe9d7d8a39d3c2dc64b7a1b764b6d3c79c&v=4" width = "200" />](https://github.com/popkdodge) | [<img src="https://avatars1.githubusercontent.com/u/16887907?s=460&u=abefba57b8b58084d4df6c8a666873ed0986eea6&v=4" width = "200" />](https://github.com/royeradames) | [<img src="https://avatars2.githubusercontent.com/u/55510668?s=460&u=971839c4635847249a9c6ffc1d3b855f05910041&v=4" width = "200" />](https://github.com/bikesh-maharjan) | [<img src="https://avatars1.githubusercontent.com/u/59752102?s=460&u=bdcb67dfd73148cd7e867bd7d0448f75f45c5d3c&v=4" width = "200" />](https://github.com/Scotth72) |
+| Data Scientist | Data Scientist | Back-End Developer | Front-End Developer | Front-End Developer |
+|[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/RobDBennett) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/popkdodge) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/royeradames) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/bikesh-maharjan) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Scotth72) |
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/robdbennett-tech/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/sasana-kongjareon-2618281a6/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/royer-adames/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/bikeshmaharjan91/) |  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/heath-l-scott/) |            
 
-- a dynamic navigation bar with tabs displaying either the Map, the Graph, or the About page as well as a popup with the Filter form
-- Sign in/Sign out options `(not functional)`
-- Graph: 
-    - timelime view of number of incidents over the course of a year (data dates range) 
-    - ability to filter out data by type of brutality used
-- Filter `(currently applying just for the map)`: 
-    - date range implemented `(not functional)`
-    - reset filters `(not functional)`
-    - select state dropdown or search state by typing(selected state can be removed with one click on the x  button on the right afterwards): zooms onto the selected state
-    - search by zip-code (looked up zipcode can be removed with the x  button on the right of it afterwards): zooms onto a zipcode location
-    - filter incidents by type of brutality
-    - filter incidents by type of source like Twitter, Reddit, etc `(not functional)`
-- Map:
-    - graphic content warning screen 
-    - Control panel:
-        - ability to navigate and zoom on to user's location
-        - zoom in/out the map 
-        - reset bearing to north
-    - dynamic Hide/Show Map Options menu:
-        - enable/disable zooming on the map with mouse scroll wheel 
-        - enable/disable fast travel states: turns on a hover option for each screen and zooms onto the highlighted state when clicked 
-        - reset map view to the original view
+<br>
 
+## Deployed Product
+- Front-End Deployment- This is the user version for the current product deployment.
+https://d-fe.humanrightsfirst.dev/
+- Back-End App- This is the back end app that pulls from the DS API and wires into the front-end. However, there isn't a splash page.
+https://hrf-d-api.herokuapp.com/
+- Data-Science API- This is the API that pulls from the various data sources, cleans/shapes the data, and reports various visualizations.
+http://hrf-ds16.eba-fmbjvhg4.us-east-1.elasticbeanstalk.com/#/
 
-
-## Requirements
-
-- [Labs Engineering Standard requirements found here](https://www.notion.so/Human-Rights-First-Roadmap-Team-Kevin-c53ed8e80b0e4584aba47abee5753591)
-
-### Environment variable
-
-- `REACT_APP_MAPBOX_TOKEN` Mapbox access tokens (check `https://docs.mapbox.com/help/how-mapbox-works/access-tokens/`)
-> the token can be found on the previous team's deployment info page or recreated on mapbox studio
+## Linked Repos
+- Front-End Repo- This repo contains all of the documentation and files for the front end deployment
+https://github.com/Lambda-School-Labs/human-rights-first-d-fe
+- Back-End Repo- This repo contains all of the documentation and files for the back end deployment
+https://github.com/Lambda-School-Labs/human-rights-first-d-be
+- Data-Science Repo- This repo contains all of the documentation and files for the data science api deployment
+https://github.com/Lambda-School-Labs/human-rights-first-d-ds
 
 ## Components
-
 - Loading Page
 - NavBar
-- Filter Form
 - Map
 - Graph
+- Pie Chart
+- Top List 
 - About
 
+## Features
+- added to the navigation bar with tabs displaying dashboards with Police use of force, incidents of killing, and the About page. 
+- tabs provide the display of the data from the backend and the Data Science
+- also a filter button to filter the information requested (not functional)
+- Police use of force (Dashboard/Tab1)
+    - Recent acts of Police Force
+        -This graph shows incidents over time, allowing the end user to watch the whole year, or scroll manually to the date that most interests them.
+    - Events of Police Violence
+        -This graph shows the last 6 months of Police Use of Force. Hovering over the line will reveal individual incidents that compose the line.
+- Incidents of Killing (Dashboard/Tab2)
+    - Map of Police Shooting
+        -This graph shows the recorded incidents of lethal police encounters over the map location where they occurred. Hovering over the individual points will provide more data on each incident.
+    - Number of people killed per state
+        -This bar graph shows the number of incidents per state, normalized to account for state population. This should counter popular presumptions that more densely populated states have a higher statistical risk.
+    - Pie graph of victim's race
+        -This pie chart compiles the racial components of the victims of these acts.
+    - Demographic of US
+        -This pie chart shows the national racial breakdown for comparison of relative risk.
+
+## Contributing - future features needed/desired for this project:
+   -ability to reset filters
+   -ability to apply and filter by date range
+   -ability to filter by source type
+   -add description on each map, graph and pie chart 
+   -add top five recent killings 
 
 
-## Styling Our App
-- `CSS`
-- `AntD`
+## Tech Stack Used 
+- React
+- React Redux
+    - useEffect, useSelector, dispatch, store
+- Axios
+- Plotly
+- ANT Design
+- CSS
 
-## Data Visualization 
-`MapBox` - https://docs.mapbox.com :
-- using mapboxgl approach
+## User Flows 
+The user goes to the front-end website. They are greeted with the non-lethal incidents data. There are two graphs. The left-most graph is the progression of incidents over time. The play button should automatically advance time, but you can also drag the slider to a specific date. Each point will populate on the map with details and a clickable link to the stories they are associated with.
 
-## The Team
-- [Hira Khan](https://github.com/Hira63S)[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Hira63S)   [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/hira-shahid-991b1583/) - Team Project Lead
+The right-most graph is a line graph with the same information, but displayed over time to easy show spikes of activity.
+[User1](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/User-Flow1.JPG)
 
-- [Cedric Winbush](https://github.com/caw442000)[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/caw442000)   [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/cedricwinbush/) - Team Project Lead
+Along the top of the screen you will have a few tabs. Clicking on the 'Incidents of Killing' tab will give you the second batch of graphs.
+On this screen the user should see four graphs. The upper left graph is a map of the US with historical data of police lethal use of force, including off-duty incidents. The default filter is for the full time of the data, but there is a filter tab on the upper right that will allow the user to dial in on the specific timeframe they wish to see displayed. On the US map, each point is a specific instance that can be hovered over for more data. The map can zoom and pan effectively, and each datapoint is represented as close to the address that it occured as possible.
 
-- [Virginia Davenport](https://github.com/virginia-d90)[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/virginia-d90)   [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/virginia-davenport/)   - Back End Engineer
+The upper-right graph is a bar graph displaying the different states with their number of incidents. This data has been normalized so that the population of the state is taken into account with the number of incidents. The purpose of this is to illustrate that the general public tends to associate police use of force with big cities, but the extremely troubling trend is that more rural areas like New Mexico have a substantively higher lethal force per capita.
 
-- [Juan Rivera](https://github.com/Juan-Rivera)[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Juan-Rivera)   [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](linkedin.com/in/juan-rivera-dev) - Back End Engineer
+The lower-left graph is a breakdown of the victim's race displayed on a pie-chart.
 
-- [Barbara Moore](https://github.com/barbaralois)[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/barbaralois)   [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/barbaralois/ ) - Front End Engineer
+The lower-right graph is the breakdown of the national racial demographics for the US to illustrate differences in lethal force.
+[User2](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/User-Flow2.JPG)
 
-- [Blayze Stone](https://github.com/blayzestone)[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/blayzestone)   [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/blayze-stone/) - Front End Engineer
+The final user option is to go to the About page, which has some information regarding the Human Rights First organization.
+[User3](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/User-Flow3.JPG)
 
-- [Marta Krawczyk](https://github.com/MartaKode)[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/MartaKode)   [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/marta-janina-krawczyk/) - Front End Engineer
+## Wireframes (FE only)
+- Front End should include a description and screen shot of wireframes
+[FE-Wire](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/New_Wire_Frame.png)
 
-- [David Cruz](https://github.com/DAVIDCRUZ0202)[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/DAVIDCRUZ0202)   [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ]( https://www.linkedin.com/in/daavidcruuz/) - Data Science Engineer
 
-- [Johann Augustine](https://github.com/DataLovecraft)[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/DataLovecraft)   [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/johannaugustine/) - Data Science Engineer
+## Architecture
+The flow for visualizations and descriptions between the user and the back end are detailed below.
 
-## ⚠ Contributing - future features needed/desired for this project:
+[FE-Wire](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/Front-End-Wire-Frame.JPG)
 
-> Please refer to the highlited parentheses statements throughout this ReadMe for better understanding
+The base architecture for the Data-Science API is displayed below.
+[DS-Wire](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/DS-Wire-Frame.JPG)
 
-- successful connection between Back End and Data Science teams
-- successful connection between Back End and Front End teams
-- Register/Login functionality added (currenly not functional)
-- ability to reset filters
-- ability to apply and filter by date range
-- ability to filter by source type
-- prevent map refresh/reload when filtering data by incident type:
-    - instead of state or global variables for the filter function, more research can be done on filtering layers inside of map.addLayer() functions using filter functions mapbox has
-    - setting filters is also an options:  https://docs.mapbox.com/mapbox-gl-js/api/map/#map#setfilter
-- make filter for functional with the Graph
-    - add more options to the Graph like filtering by state or zipcode or displaying data based off of date range
+
+
+
+
+
+
+
+
+
+
