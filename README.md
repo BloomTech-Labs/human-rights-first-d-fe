@@ -83,7 +83,7 @@ https://github.com/Lambda-School-Labs/human-rights-first-d-ds
 The user goes to the front-end website. They are greeted with the non-lethal incidents data. There are two graphs. The left-most graph is the progression of incidents over time. The play button should automatically advance time, but you can also drag the slider to a specific date. Each point will populate on the map with details and a clickable link to the stories they are associated with.
 
 The right-most graph is a line graph with the same information, but displayed over time to easy show spikes of activity.
-[User1](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/User-Flow1.JPG)
+![User1](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/User-Flow1.JPG)
 
 Along the top of the screen you will have a few tabs. Clicking on the 'Incidents of Killing' tab will give you the second batch of graphs.
 On this screen the user should see four graphs. The upper left graph is a map of the US with historical data of police lethal use of force, including off-duty incidents. The default filter is for the full time of the data, but there is a filter tab on the upper right that will allow the user to dial in on the specific timeframe they wish to see displayed. On the US map, each point is a specific instance that can be hovered over for more data. The map can zoom and pan effectively, and each datapoint is represented as close to the address that it occured as possible.
@@ -93,23 +93,23 @@ The upper-right graph is a bar graph displaying the different states with their 
 The lower-left graph is a breakdown of the victim's race displayed on a pie-chart.
 
 The lower-right graph is the breakdown of the national racial demographics for the US to illustrate differences in lethal force.
-[User2](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/User-Flow2.JPG)
+![User2](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/User-Flow2.JPG)
 
 The final user option is to go to the About page, which has some information regarding the Human Rights First organization.
-[User3](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/User-Flow3.JPG)
+![User3](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/User-Flow3.JPG)
 
 ## Wireframes (FE only)
 - Front End should include a description and screen shot of wireframes
-[FE-Wire](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/New_Wire_Frame.png)
+![FE-Wire](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/New_Wire_Frame.png)
 
 
 ## Architecture
 The flow for visualizations and descriptions between the user and the back end are detailed below.
 
-[FE-Wire](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/Front-End-Wire-Frame.JPG)
+![FE-Wire](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/Front-End-Wire-Frame.JPG)
 
 The base architecture for the Data-Science API is displayed below.
-[DS-Wire](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/DS-Wire-Frame.JPG)
+![DS-Wire](https://github.com/Lambda-School-Labs/human-rights-first-d-ds/blob/main/screenshots/DS-Wire-Frame.JPG)
 
 
 
