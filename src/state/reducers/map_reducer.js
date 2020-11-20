@@ -33,7 +33,7 @@ export function mapReducer(state = initialState, action) {
     case 'FIND_START_DATE':
       return {
         ...state.map(startDate => {
-          return startDate == action.payload;
+          return startDate === action.payload;
         }),
       };
     case 'ADD_ARMED':

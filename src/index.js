@@ -1,14 +1,13 @@
 //libraries
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // redux hooks
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import { Button, Layout } from 'antd';
 // import Filter_forms from './components/Filter_forms';
 
 // reducers
@@ -18,7 +17,6 @@ import rootReducer from './state/reducers/combinedReducer';
 //components
 import Header from './components/Header';
 import Loading from './components/Loading';
-import Visualization from './components/Visualization';
 import About from './components/not_use/common/About';
 //CSS styles
 import 'antd/dist/antd.less';
@@ -41,7 +39,6 @@ function App() {
     <>
       <Header />
       <Loading />
-      {/* <Visualization /> */}
 
       <Router>
         <Switch>

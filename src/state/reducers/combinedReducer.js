@@ -6,6 +6,7 @@ import { pieReducer as pie } from './pie_reducers';
 import { forceReducer as force } from './force_reducers';
 import { incidentReducer as incident } from './incident_reducers';
 import { demoReducer as demo } from './demo_reducers';
+import { listReducer as list } from './list_reducers';
 
 const rootReducer = combineReducers({
   map,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   force,
   incident,
   demo,
+  list,
 });
 
 export default rootReducer;

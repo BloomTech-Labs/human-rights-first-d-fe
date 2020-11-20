@@ -2,10 +2,10 @@
 import React, { useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import About from './not_use/common/About';
+import TopList from '../components/TopList';
 import 'antd/dist/antd.css';
 
 import { Tabs, Button, Popover } from 'antd';
-import Filter_forms from './Filter_forms';
 import { useSelector, useDispatch } from 'react-redux';
 import { mapSelection } from '../state/actions/mapActions';
 import { barSelection } from '../state/actions/barActions';
@@ -13,16 +13,10 @@ import { pieSelection } from '../state/actions/pieActions';
 import { forceSelection } from '../state/actions/forceActions';
 import { incidentSelection } from '../state/actions/incidentsActions';
 import { demoSelection } from '../state/actions/demoActions';
-
-import Visualization from './Visualization';
+import { listSelection } from '../state/actions/listAction';
 
 // filter-forms
 import Map from './forms/Map';
-import BarGraph from './forms/BarGraph';
-import PieChart from './forms/PieChart';
-
-// export default function Visualization() {
-//states
 
 const Loading = () => {
   const { TabPane } = Tabs;
@@ -48,8 +42,7 @@ const Loading = () => {
     dispatch(forceSelection());
     dispatch(incidentSelection());
     dispatch(demoSelection());
-
-    // console.log('map select', mapData);
+    dispatch(listSelection());
   }, []);
 
   function callback(key) {
@@ -74,8 +67,8 @@ const Loading = () => {
           <TabPane tab="Police Use of Force" key="1">
             <Button
               placement="right"
-              title={<span></span>}
-              content={<Map />}
+              // title={<span></span>}
+              // content={<Map />}
               trigger="click"
             ></Button>
             <Plot data={forceData} layout={forceLayout} />
@@ -87,6 +80,10 @@ const Loading = () => {
             <Plot data={barData} layout={barLayout} />
             <Plot data={pieData} layout={pieLayout} />
             <Plot data={demoData} layout={demoLayout} />
+          </TabPane>
+
+          <TabPane tab="Top 5 States Police Use of Force" key="4">
+            <TopList />
           </TabPane>
 
           <TabPane tab="About" key="3">

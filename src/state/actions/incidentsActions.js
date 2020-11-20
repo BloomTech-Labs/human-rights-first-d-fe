@@ -10,7 +10,6 @@ export const incidentSelection = () => dispatch => {
 
     .get('https://hrf-d-api.herokuapp.com/ds_server/us_non_lethal_line')
     .then(res => {
-      console.log('incidentdata', res.data);
       const incident = JSON.parse(res.data);
       // dispatches
       dispatch({ type: ADD_INCIDENT_DATA, payload: incident.data });
