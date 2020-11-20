@@ -1,32 +1,13 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { DatePicker, Space, Button, Card, message, Select } from 'antd';
+import React from 'react';
+import { DatePicker, Space, Button, Card, Select } from 'antd';
 import states from '../../helpers/states';
-
-import { mapSelection } from '../../state/actions/mapActions';
 
 // helpers
 const { Option } = Select;
 
 const { RangePicker } = DatePicker;
 
-// Button onChange info
-
-function handleMenuClick(e) {
-  message.info('Click on menu item.');
-  console.log('click', e);
-}
-
 export default function Map() {
-  const dispatch = useDispatch();
-  const mapData = useSelector(state => state.map.data);
-  // const mapLayout = useSelector(state => state.map.layout);
-
-  // helper function
-  useEffect(() => {
-    dispatch(mapSelection());
-  }, []);
-
   return (
     <div className="main">
       <Card title="" style={{ width: 500 }}>

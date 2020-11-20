@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Radio, DatePicker, Button, Form, Input, Select } from 'antd';
-import moment from 'moment';
 
 import { barSelection } from '../../state/actions/barActions';
 
@@ -21,29 +20,10 @@ const ascOptions = [
     value: false,
   },
 ];
-// const focusOn = [
-//   {
-//     label: 'State',
-//     value: true,
-//   },
-//   {
-//     label: 'National',
-//     value: true,
-//   },
-//   {
-//     label: 'Zipcode',
-//     value: true,
-//   },
-//   {
-//     label: 'City',
-//     value: true,
-//   },
-// ];
 
 export default function BarGraph() {
   //react hooks
   const dispatch = useDispatch();
-  // const [state, setState] = useState(initialState);
 
   const barData = useSelector(state => state.bar.data);
   const barLayout = useSelector(state => state.bar.layout);

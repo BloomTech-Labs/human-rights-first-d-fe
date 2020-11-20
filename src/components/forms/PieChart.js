@@ -1,19 +1,16 @@
 // libraries
 import React from 'react';
 import { Select, Form, Button } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 // helpers
 import states from '../../helpers/states';
-import { ADD_PIE_CHART } from '../../state/reducers/pie_reducers';
 
 const { Option } = Select;
 
 // collect a US state abbriviation and send it to Visualization for rendering on submit
 export default function PieChart() {
   // redux hooks - save state abbreviation on the global prop
-  const dispatch = useDispatch();
   const state = useSelector(state => state);
   console.log(state);
   // form options and functions
@@ -24,7 +21,6 @@ export default function PieChart() {
   const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
   };
-
 
   return (
     <Form
